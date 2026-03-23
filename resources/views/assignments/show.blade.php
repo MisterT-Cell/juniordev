@@ -1,93 +1,98 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $assignment->title }}</h2>
+        <div class="flex items-center gap-3 flex-wrap">
+            <a href="{{ route('assignments.index') }}" class="text-gray-400 hover:text-gray-700 text-sm">&larr; Terug</a>
+            <span class="text-gray-300">/</span>
+            <h2 class="font-black text-2xl tracking-tight">{{ $assignment->title }}</h2>
+        </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-5">
 
-            @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
-            @endif
-            @if(session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{{ session('error') }}</div>
-            @endif
+        @if(session('success'))
+            <div class="bg-[#c8f135]/20 border border-[#c8f135] text-gray-800 px-5 py-3.5 rounded-2xl text-sm font-medium">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="bg-red-50 border border-red-200 text-red-700 px-5 py-3.5 rounded-2xl text-sm font-medium">{{ session('error') }}</div>
+        @endif
 
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <!-- Header -->
-                <div class="flex flex-wrap justify-between items-start gap-4 mb-6">
-                    <div>
-                        <div class="flex gap-2 mb-2">
-                            <span class="text-xs font-medium bg-indigo-100 text-indigo-700 px-2 py-1 rounded">{{ ucfirst($assignment->type) }}</span>
-                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{{ $assignment->region }}</span>
-                            <span class="text-xs px-2 py-1 rounded {{ $assignment->status === 'open' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
-                            </span>
-                        </div>
-                        <p class="text-sm text-gray-500">Geplaatst door: <strong>{{ $assignment->company->companyProfile->company_name ?? $assignment->company->name }}</strong></p>
-                        <p class="text-xs text-gray-400 mt-1">{{ $assignment->created_at->format('d-m-Y') }}</p>
-                    </div>
-                    <div class="text-sm text-gray-500">
-                        {{ $assignment->applications->count() }} reacties
-                    </div>
-                </div>
+        <div class="bg-white rounded-2xl border border-gray-200 p-8">
 
-                <!-- Description -->
-                <div class="mb-6">
-                    <h3 class="font-semibold text-gray-900 mb-2">Beschrijving</h3>
-                    <div class="text-gray-700 whitespace-pre-line">{{ $assignment->description }}</div>
-                </div>
-
-                @if($assignment->requirements)
-                <div class="mb-6">
-                    <h3 class="font-semibold text-gray-900 mb-2">Eisen</h3>
-                    <div class="text-gray-700 whitespace-pre-line">{{ $assignment->requirements }}</div>
-                </div>
-                @endif
-
-                <!-- Apply section -->
-                @auth
-                    @if(auth()->user()->isStudent())
-                        @if($hasApplied)
-                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                                <p class="text-green-700 font-medium">Je hebt al gereageerd op deze opdracht.</p>
-                                <a href="{{ route('student.applications.index') }}" class="text-green-600 underline text-sm">Bekijk je reacties</a>
-                            </div>
-                        @elseif($assignment->status === 'open')
-                            <div class="border-t border-gray-200 pt-6">
-                                <h3 class="font-semibold text-gray-900 mb-4">Reageer op deze opdracht</h3>
-                                <form method="POST" action="{{ route('applications.store', $assignment) }}">
-                                    @csrf
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                                            Motivatie <span class="text-gray-400">(minimaal 50 tekens)</span>
-                                        </label>
-                                        <textarea name="motivation" rows="5" required minlength="50"
-                                            class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                            placeholder="Vertel waarom jij de juiste kandidaat bent...">{{ old('motivation') }}</textarea>
-                                        <x-input-error :messages="$errors->get('motivation')" class="mt-2" />
-                                    </div>
-                                    <div class="mt-4">
-                                        <x-primary-button>Reactie versturen</x-primary-button>
-                                    </div>
-                                </form>
-                            </div>
-                        @else
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <p class="text-gray-600">Deze opdracht is gesloten voor nieuwe reacties.</p>
-                            </div>
-                        @endif
-                    @endif
-                @else
-                    <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-                        <p class="text-indigo-700">
-                            <a href="{{ route('login') }}" class="underline font-medium">Log in</a> of
-                            <a href="{{ route('register') }}" class="underline font-medium">registreer</a> om te reageren op deze opdracht.
-                        </p>
-                    </div>
-                @endauth
+            {{-- Meta --}}
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{{ ucfirst($assignment->type) }}</span>
+                <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{{ $assignment->region }}</span>
+                <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full {{ $assignment->status === 'open' ? 'bg-[#c8f135]/30 text-gray-800' : 'bg-red-100 text-red-600' }}">
+                    {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
+                </span>
             </div>
 
+            <div class="flex justify-between items-start gap-4 mb-8 pb-8 border-b border-gray-100">
+                <div>
+                    <p class="text-sm text-gray-500 mb-0.5">Geplaatst door</p>
+                    <p class="font-bold text-gray-900">{{ $assignment->company->companyProfile->company_name ?? $assignment->company->name }}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-500 mb-0.5">Reacties</p>
+                    <p class="font-bold text-gray-900">{{ $assignment->applications->count() }}</p>
+                </div>
+            </div>
+
+            {{-- Description --}}
+            <div class="mb-8">
+                <h3 class="font-black text-lg mb-4">Beschrijving</h3>
+                <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $assignment->description }}</div>
+            </div>
+
+            @if($assignment->requirements)
+            <div class="mb-8">
+                <h3 class="font-black text-lg mb-4">Vereisten</h3>
+                <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $assignment->requirements }}</div>
+            </div>
+            @endif
+
+            {{-- Apply --}}
+            @auth
+                @if(auth()->user()->isStudent())
+                    @if($hasApplied)
+                        <div class="bg-[#c8f135]/20 border border-[#c8f135] rounded-2xl p-5">
+                            <p class="font-bold text-gray-800 mb-1">Je hebt al gereageerd op deze opdracht.</p>
+                            <a href="{{ route('student.applications.index') }}" class="text-sm text-gray-600 underline">Bekijk je reacties</a>
+                        </div>
+                    @elseif($assignment->status === 'open')
+                        <div class="border-t border-gray-100 pt-8">
+                            <h3 class="font-black text-lg mb-6">Reageer op deze opdracht</h3>
+                            <form method="POST" action="{{ route('applications.store', $assignment) }}">
+                                @csrf
+                                <div class="mb-5">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">
+                                        Motivatie <span class="normal-case font-normal text-gray-400">(minimaal 50 tekens)</span>
+                                    </label>
+                                    <textarea name="motivation" rows="6" required minlength="50"
+                                        class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 resize-none"
+                                        placeholder="Vertel waarom jij de juiste kandidaat bent...">{{ old('motivation') }}</textarea>
+                                    <x-input-error :messages="$errors->get('motivation')" class="mt-2" />
+                                </div>
+                                <button type="submit" class="bg-[#0a0a0a] text-white font-bold px-6 py-3 rounded-full hover:bg-gray-800 transition text-sm">
+                                    Reactie versturen
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 text-gray-500 text-sm">
+                            Deze opdracht is gesloten voor nieuwe reacties.
+                        </div>
+                    @endif
+                @endif
+            @else
+                <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                    <p class="text-gray-700 text-sm">
+                        <a href="{{ route('login') }}" class="font-bold underline">Log in</a> of
+                        <a href="{{ route('register') }}" class="font-bold underline">registreer</a> om te reageren.
+                    </p>
+                </div>
+            @endauth
         </div>
+
     </div>
 </x-app-layout>

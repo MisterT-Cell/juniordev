@@ -1,139 +1,123 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" class="text-xl font-bold text-indigo-600">
-                        JuniorDev
+<nav x-data="{ open: false }" class="bg-[#0a0a0a] border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="text-white font-black text-lg tracking-tight">
+            Junior<span class="text-[#c8f135]">Dev</span>
+        </a>
+
+        {{-- Desktop nav --}}
+        <div class="hidden md:flex items-center gap-7 text-sm text-gray-400">
+            <a href="{{ route('assignments.index') }}"
+                class="hover:text-white transition {{ request()->routeIs('assignments.*') ? 'text-white' : '' }}">
+                Opdrachten
+            </a>
+            @auth
+                <a href="{{ route('dashboard') }}"
+                    class="hover:text-white transition {{ request()->routeIs('dashboard') ? 'text-white' : '' }}">
+                    Dashboard
+                </a>
+
+                @if(auth()->user()->isStudent())
+                    <a href="{{ route('student.applications.index') }}"
+                        class="hover:text-white transition {{ request()->routeIs('student.applications.*') ? 'text-white' : '' }}">
+                        Reacties
                     </a>
-                </div>
+                @endif
 
-                <!-- Nav Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('assignments.index')" :active="request()->routeIs('assignments.*')">
+                @if(auth()->user()->isCompany())
+                    <a href="{{ route('company.assignments.index') }}"
+                        class="hover:text-white transition {{ request()->routeIs('company.assignments.*') ? 'text-white' : '' }}">
                         Opdrachten
-                    </x-nav-link>
+                    </a>
+                @endif
 
-                    @auth
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            Dashboard
-                        </x-nav-link>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.users') }}"
+                        class="hover:text-white transition {{ request()->routeIs('admin.*') ? 'text-white' : '' }}">
+                        Beheer
+                    </a>
+                @endif
 
+                <a href="{{ route('messages.index') }}"
+                    class="hover:text-white transition flex items-center gap-1.5 {{ request()->routeIs('messages.*') ? 'text-white' : '' }}">
+                    Berichten
+                    @php $unread = \App\Models\Message::where('receiver_id', auth()->id())->whereNull('read_at')->count(); @endphp
+                    @if($unread > 0)
+                        <span class="bg-[#c8f135] text-black text-xs font-bold rounded-full px-1.5 py-0.5 leading-none">{{ $unread }}</span>
+                    @endif
+                </a>
+            @endauth
+        </div>
+
+        {{-- Right side --}}
+        <div class="hidden md:flex items-center gap-3">
+            @auth
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open"
+                        class="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition">
+                        <div class="w-8 h-8 rounded-full bg-[#c8f135] text-black font-bold flex items-center justify-center text-xs">
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        </div>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition
+                        class="absolute right-0 mt-2 w-44 bg-[#111] border border-white/10 rounded-xl overflow-hidden shadow-xl z-50">
                         @if(auth()->user()->isStudent())
-                            <x-nav-link :href="route('student.applications.index')" :active="request()->routeIs('student.applications.*')">
-                                Mijn Reacties
-                            </x-nav-link>
+                            <a href="{{ route('student.profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition">Mijn profiel</a>
+                        @elseif(auth()->user()->isCompany())
+                            <a href="{{ route('company.profile.edit') }}" class="block px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition">Bedrijfsprofiel</a>
                         @endif
-
-                        @if(auth()->user()->isCompany())
-                            <x-nav-link :href="route('company.assignments.index')" :active="request()->routeIs('company.assignments.*')">
-                                Mijn Opdrachten
-                            </x-nav-link>
-                        @endif
-
-                        @if(auth()->user()->isAdmin())
-                            <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.*')">
-                                Beheer
-                            </x-nav-link>
-                        @endif
-
-                        <x-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.*')">
-                            Berichten
-                            @php
-                                $unread = \App\Models\Message::where('receiver_id', auth()->id())->whereNull('read_at')->count();
-                            @endphp
-                            @if($unread > 0)
-                                <span class="ml-1 bg-red-500 text-white text-xs rounded-full px-2 py-0.5">{{ $unread }}</span>
-                            @endif
-                        </x-nav-link>
-                    @endauth
-                </div>
-            </div>
-
-            <!-- Right side -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                @auth
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
-                        <x-slot name="content">
-                            @if(auth()->user()->isStudent())
-                                <x-dropdown-link :href="route('student.profile.edit')">Mijn Profiel</x-dropdown-link>
-                            @elseif(auth()->user()->isCompany())
-                                <x-dropdown-link :href="route('company.profile.edit')">Bedrijfsprofiel</x-dropdown-link>
-                            @endif
+                        <div class="border-t border-white/10">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 transition">
                                     Uitloggen
-                                </x-dropdown-link>
+                                </button>
                             </form>
-                        </x-slot>
-                    </x-dropdown>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900 mr-4">Inloggen</a>
-                    <a href="{{ route('register') }}" class="text-sm bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Registreren</a>
-                @endauth
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('assignments.index')">Opdrachten</x-responsive-nav-link>
-            @auth
-                <x-responsive-nav-link :href="route('dashboard')">Dashboard</x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('messages.index')">Berichten</x-responsive-nav-link>
-                @if(auth()->user()->isStudent())
-                    <x-responsive-nav-link :href="route('student.applications.index')">Mijn Reacties</x-responsive-nav-link>
-                @endif
-                @if(auth()->user()->isCompany())
-                    <x-responsive-nav-link :href="route('company.assignments.index')">Mijn Opdrachten</x-responsive-nav-link>
-                @endif
-            @endauth
-        </div>
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            @auth
-                <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                </div>
-                <div class="mt-3 space-y-1">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            Uitloggen
-                        </x-responsive-nav-link>
-                    </form>
+                        </div>
+                    </div>
                 </div>
             @else
-                <div class="space-y-1 px-4">
-                    <x-responsive-nav-link :href="route('login')">Inloggen</x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('register')">Registreren</x-responsive-nav-link>
-                </div>
+                <a href="{{ route('login') }}" class="text-sm text-gray-400 hover:text-white transition">Inloggen</a>
+                <a href="{{ route('register') }}" class="bg-[#c8f135] text-black text-sm font-bold px-4 py-2 rounded-full hover:bg-[#d4f54e] transition">
+                    Registreren
+                </a>
             @endauth
         </div>
+
+        {{-- Mobile hamburger --}}
+        <button @click="open = !open" class="md:hidden text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path :class="{'hidden': open}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                <path :class="{'hidden': !open}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    {{-- Mobile menu --}}
+    <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden border-t border-white/10 px-6 py-4 space-y-3">
+        <a href="{{ route('assignments.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Opdrachten</a>
+        @auth
+            <a href="{{ route('dashboard') }}" class="block text-sm text-gray-300 hover:text-white py-1">Dashboard</a>
+            <a href="{{ route('messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Berichten</a>
+            @if(auth()->user()->isStudent())
+                <a href="{{ route('student.applications.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Mijn Reacties</a>
+            @endif
+            @if(auth()->user()->isCompany())
+                <a href="{{ route('company.assignments.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Mijn Opdrachten</a>
+            @endif
+            <div class="pt-2 border-t border-white/10">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="text-sm text-gray-400 hover:text-white py-1">Uitloggen</button>
+                </form>
+            </div>
+        @else
+            <a href="{{ route('login') }}" class="block text-sm text-gray-300 hover:text-white py-1">Inloggen</a>
+            <a href="{{ route('register') }}" class="inline-block bg-[#c8f135] text-black text-sm font-bold px-4 py-2 rounded-full mt-1">Registreren</a>
+        @endauth
     </div>
 </nav>

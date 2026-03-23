@@ -1,66 +1,69 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Bedrijfsdashboard</h2>
+        <h2 class="font-black text-2xl tracking-tight">Dashboard</h2>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-7xl mx-auto px-6 py-10 space-y-6">
 
-            @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{{ session('success') }}</div>
-            @endif
+        @if(session('success'))
+            <div class="bg-[#c8f135]/20 border border-[#c8f135] text-gray-800 px-5 py-3.5 rounded-2xl text-sm font-medium">{{ session('success') }}</div>
+        @endif
 
-            @if(!auth()->user()->companyProfile?->company_name)
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <p class="text-yellow-800">Vul eerst je <a href="{{ route('company.profile.edit') }}" class="underline font-medium">bedrijfsprofiel</a> in.</p>
+        @if(!auth()->user()->companyProfile?->company_name)
+            <div class="bg-[#0a0a0a] text-white rounded-2xl p-6 flex justify-between items-center gap-4">
+                <div>
+                    <p class="font-bold mb-1">Bedrijfsprofiel nog niet ingevuld</p>
+                    <p class="text-gray-400 text-sm">Vul je profiel in voordat je opdrachten plaatst.</p>
                 </div>
-            @endif
-
-            <!-- Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200 text-center">
-                    <div class="text-3xl font-bold text-indigo-600">{{ $assignments->count() }}</div>
-                    <div class="text-gray-600 text-sm mt-1">Opdrachten</div>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200 text-center">
-                    <div class="text-3xl font-bold text-yellow-500">{{ $pendingApplications }}</div>
-                    <div class="text-gray-600 text-sm mt-1">Openstaande reacties</div>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-200 text-center">
-                    <div class="text-3xl font-bold text-red-500">{{ $unreadMessages }}</div>
-                    <div class="text-gray-600 text-sm mt-1">Ongelezen berichten</div>
-                </div>
+                <a href="{{ route('company.profile.edit') }}" class="shrink-0 bg-[#c8f135] text-black font-bold text-sm px-4 py-2 rounded-full">
+                    Profiel invullen
+                </a>
             </div>
+        @endif
 
-            <!-- Opdrachten -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-semibold text-gray-900">Mijn opdrachten</h3>
-                    <a href="{{ route('company.assignments.create') }}" class="bg-indigo-600 text-white text-sm px-4 py-2 rounded hover:bg-indigo-700">
-                        + Nieuwe opdracht
-                    </a>
-                </div>
-                @forelse($assignments as $assignment)
-                <div class="border-b border-gray-100 py-3 last:border-0">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <a href="{{ route('assignments.show', $assignment) }}" class="font-medium text-gray-800 hover:text-indigo-600">{{ $assignment->title }}</a>
-                            <p class="text-xs text-gray-500 mt-1">{{ $assignment->region }} &bull; {{ $assignment->type }} &bull; {{ $assignment->applications->count() }} reacties</p>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs px-2 py-1 rounded {{ $assignment->status === 'open' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600' }}">
-                                {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
-                            </span>
-                            <a href="{{ route('company.assignments.edit', $assignment) }}" class="text-xs text-indigo-600 hover:underline">Bewerken</a>
-                            <a href="{{ route('company.applications.index', $assignment) }}" class="text-xs text-gray-600 hover:underline">Reacties</a>
-                        </div>
-                    </div>
-                </div>
-                @empty
-                <p class="text-gray-500 text-sm">Nog geen opdrachten. <a href="{{ route('company.assignments.create') }}" class="text-indigo-600 underline">Maak je eerste opdracht aan</a></p>
-                @endforelse
+        {{-- Stats --}}
+        <div class="grid grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+                <div class="text-4xl font-black tracking-tight">{{ $assignments->count() }}</div>
+                <div class="text-sm text-gray-500 mt-1">Opdrachten</div>
             </div>
-
+            <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+                <div class="text-4xl font-black tracking-tight text-yellow-600">{{ $pendingApplications }}</div>
+                <div class="text-sm text-gray-500 mt-1">Openstaande reacties</div>
+            </div>
+            <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
+                <div class="text-4xl font-black tracking-tight">{{ $unreadMessages }}</div>
+                <div class="text-sm text-gray-500 mt-1">Ongelezen berichten</div>
+            </div>
         </div>
+
+        {{-- Opdrachten --}}
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="font-black text-base">Mijn opdrachten</h3>
+                <a href="{{ route('company.assignments.create') }}"
+                    class="bg-[#0a0a0a] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-gray-800 transition">
+                    + Nieuwe opdracht
+                </a>
+            </div>
+            @forelse($assignments as $assignment)
+            <div class="py-4 border-b border-gray-100 last:border-0 flex flex-wrap justify-between items-center gap-3">
+                <div>
+                    <p class="font-semibold text-gray-900">{{ $assignment->title }}</p>
+                    <p class="text-xs text-gray-400 mt-0.5">{{ $assignment->region }} · {{ $assignment->type }} · {{ $assignment->applications->count() }} reacties</p>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full {{ $assignment->status === 'open' ? 'bg-[#c8f135]/30 text-gray-700' : 'bg-gray-100 text-gray-500' }}">
+                        {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
+                    </span>
+                    <a href="{{ route('company.assignments.edit', $assignment) }}" class="text-xs font-semibold text-gray-500 hover:text-gray-900 transition">Bewerken</a>
+                    <a href="{{ route('company.applications.index', $assignment) }}" class="text-xs font-semibold text-gray-500 hover:text-gray-900 transition">Reacties</a>
+                </div>
+            </div>
+            @empty
+            <p class="text-sm text-gray-400 py-4">Nog geen opdrachten. <a href="{{ route('company.assignments.create') }}" class="underline text-gray-600">Maak je eerste opdracht</a></p>
+            @endforelse
+        </div>
+
     </div>
 </x-app-layout>
