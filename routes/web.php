@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/assignments/{assignment}', [AdminController::class, 'destroyAssignment'])->name('assignments.destroy');
     });
 
-    // Profile views (public for logged in users)
+    // Profile views
     Route::get('/student/{id}/profile', [StudentProfileController::class, 'show'])->name('student.profile.show');
     Route::get('/company/{id}/profile', [CompanyProfileController::class, 'show'])->name('company.profile.show');
 });
