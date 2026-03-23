@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Factories;
 
 use App\Models\CompanyProfile;
@@ -8,13 +9,14 @@ class CompanyProfileFactory extends Factory
 {
     protected $model = CompanyProfile::class;
 
-    public function definition(): array {
+    public function definition(): array
+    {
         return [
-            'company_name' => $this->faker->company(),
-            'description' => $this->faker->paragraph(4),
-            'website' => $this->faker->url(),
-            'region' => $this->faker->randomElement(['Amsterdam', 'Rotterdam', 'Utrecht', 'Den Haag', 'Eindhoven', 'Groningen', 'Tilburg']),
-            'phone' => $this->faker->phoneNumber(),
+            'company_name' => fake()->company(),
+            'description' => fake()->paragraph(fake()->numberBetween(3, 6)),
+            'website' => fake()->url(),
+            'region' => fake()->city(),
+            'phone' => fake()->phoneNumber(),
         ];
     }
 }

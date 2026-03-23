@@ -10,8 +10,8 @@ class ApplicationFactory extends Factory
 
     public function definition(): array {
         return [
-            'motivation' => $this->faker->paragraphs(2, true),
-            'status' => $this->faker->randomElement(['pending', 'pending', 'accepted', 'rejected']),
+            'motivation' => fake()->paragraphs(fake()->numberBetween(2, 4), true),
+            'status' => fake()->randomElement(['pending', 'pending', 'pending', 'accepted', 'rejected']),
         ];
     }
 }

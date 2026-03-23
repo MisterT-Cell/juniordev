@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Factories;
 
 use App\Models\StudentProfile;
@@ -8,13 +9,22 @@ class StudentProfileFactory extends Factory
 {
     protected $model = StudentProfile::class;
 
-    public function definition(): array {
+    public function definition(): array
+    {
+        $allSkills = ['PHP', 'Laravel', 'JavaScript', 'TypeScript', 'Vue.js', 'React', 'Node.js',
+            'MySQL', 'PostgreSQL', 'CSS', 'HTML', 'Tailwind', 'Bootstrap', 'Python', 'Git',
+            'Docker', 'REST API', 'Linux', 'Figma', 'Scrum'];
+
+        $levels = ['HBO', 'MBO', 'WO'];
+        $studies = ['Informatica', 'Software Engineering', 'ICT', 'Mediadesign', 'Applied AI',
+            'Game Development', 'Cybersecurity', 'Data Science'];
+
         return [
-            'phone' => $this->faker->phoneNumber(),
-            'bio' => $this->faker->paragraph(3),
-            'skills' => implode(', ', $this->faker->randomElements(['PHP', 'Laravel', 'JavaScript', 'Vue.js', 'React', 'MySQL', 'CSS', 'HTML', 'Python', 'Git'], 3)),
-            'region' => $this->faker->randomElement(['Amsterdam', 'Rotterdam', 'Utrecht', 'Den Haag', 'Eindhoven', 'Groningen', 'Tilburg']),
-            'education' => $this->faker->randomElement(['HBO Informatica', 'HBO Software Engineering', 'MBO ICT', 'WO Informatica', 'HBO Mediadesign']),
+            'phone' => fake()->phoneNumber(),
+            'bio' => fake()->paragraph(fake()->numberBetween(2, 5)),
+            'skills' => implode(', ', fake()->randomElements($allSkills, fake()->numberBetween(2, 6))),
+            'region' => fake()->city(),
+            'education' => fake()->randomElement($levels) . ' ' . fake()->randomElement($studies),
         ];
     }
 }
