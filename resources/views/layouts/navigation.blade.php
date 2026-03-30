@@ -8,9 +8,9 @@
 
         {{-- Desktop nav --}}
         <div class="hidden md:flex items-center gap-7 text-sm text-gray-400">
-            <a href="{{ route('assignments.index') }}"
-                class="hover:text-white transition {{ request()->routeIs('assignments.*') ? 'text-white' : '' }}">
-                Opdrachten
+            <a href="{{ route('jobs.index') }}"
+                class="hover:text-white transition {{ request()->routeIs('jobs.*') ? 'text-white' : '' }}">
+                Vacatures
             </a>
             @auth
                 <a href="{{ route('dashboard') }}"
@@ -26,9 +26,9 @@
                 @endif
 
                 @if(auth()->user()->isCompany())
-                    <a href="{{ route('company.assignments.index') }}"
-                        class="hover:text-white transition {{ request()->routeIs('company.assignments.*') ? 'text-white' : '' }}">
-                        Opdrachten
+                    <a href="{{ route('company.jobs.index') }}"
+                        class="hover:text-white transition {{ request()->routeIs('company.jobs.*') ? 'text-white' : '' }}">
+                        Vacatures
                     </a>
                 @endif
 
@@ -99,7 +99,7 @@
 
     {{-- Mobile menu --}}
     <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden border-t border-white/10 px-6 py-4 space-y-3">
-        <a href="{{ route('assignments.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Opdrachten</a>
+        <a href="{{ route('jobs.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Vacatures</a>
         @auth
             <a href="{{ route('dashboard') }}" class="block text-sm text-gray-300 hover:text-white py-1">Dashboard</a>
             <a href="{{ route('messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Berichten</a>
@@ -107,7 +107,7 @@
                 <a href="{{ route('student.applications.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Mijn Reacties</a>
             @endif
             @if(auth()->user()->isCompany())
-                <a href="{{ route('company.assignments.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Mijn Opdrachten</a>
+                <a href="{{ route('company.jobs.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Mijn Vacatures</a>
             @endif
             <div class="pt-2 border-t border-white/10">
                 <form method="POST" action="{{ route('logout') }}">

@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Assignment;
+use App\Models\Job;
 use App\Models\Application;
 
 class AdminController extends Controller
@@ -30,17 +30,15 @@ class AdminController extends Controller
         return back()->with('success', 'Gebruiker verwijderd!');
     }
 
-    public function assignments(Request $request)
+    public function jobs(Request $request)
     {
-        $assignments = Assignment::with('company.companyProfile')
-            ->latest()
-            ->paginate(20);
-        return view('admin.assignments', compact('assignments'));
+        $jobs = Job::with('company.companyProfile')->latest()->paginate(20);
+        return view('admin.jobs', compact('jobs'));
     }
 
-    public function destroyAssignment(Assignment $assignment)
+    public function destroyJob(Job $job)
     {
-        $assignment->delete();
-        return back()->with('success', 'Opdracht verwijderd!');
+        $job->delete();
+        return back()->with('success', 'Vacature verwijderd!');
     }
 }

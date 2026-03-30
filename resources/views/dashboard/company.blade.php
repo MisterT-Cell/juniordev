@@ -24,7 +24,7 @@
         {{-- Stats --}}
         <div class="grid grid-cols-3 gap-4">
             <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
-                <div class="text-4xl font-black tracking-tight">{{ $assignments->count() }}</div>
+                <div class="text-4xl font-black tracking-tight">{{ $jobs->count() }}</div>
                 <div class="text-sm text-gray-500 mt-1">Opdrachten</div>
             </div>
             <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
@@ -41,27 +41,27 @@
         <div class="bg-white rounded-2xl border border-gray-200 p-6">
             <div class="flex justify-between items-center mb-5">
                 <h3 class="font-black text-base">Mijn opdrachten</h3>
-                <a href="{{ route('company.assignments.create') }}"
+                <a href="{{ route('company.jobs.create') }}"
                     class="bg-[#0a0a0a] text-white text-xs font-bold px-4 py-2 rounded-full hover:bg-gray-800 transition">
                     + Nieuwe opdracht
                 </a>
             </div>
-            @forelse($assignments as $assignment)
+            @forelse($jobs as $job)
             <div class="py-4 border-b border-gray-100 last:border-0 flex flex-wrap justify-between items-center gap-3">
                 <div>
-                    <p class="font-semibold text-gray-900">{{ $assignment->title }}</p>
-                    <p class="text-xs text-gray-400 mt-0.5">{{ $assignment->region }} · {{ $assignment->type }} · {{ $assignment->applications->count() }} reacties</p>
+                    <p class="font-semibold text-gray-900">{{ $job->title }}</p>
+                    <p class="text-xs text-gray-400 mt-0.5">{{ $job->region }} · {{ $job->type }} · {{ $job->applications->count() }} reacties</p>
                 </div>
                 <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full {{ $assignment->status === 'open' ? 'bg-[#c8f135]/30 text-gray-700' : 'bg-gray-100 text-gray-500' }}">
-                        {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full {{ $job->status === 'open' ? 'bg-[#c8f135]/30 text-gray-700' : 'bg-gray-100 text-gray-500' }}">
+                        {{ $job->status === 'open' ? 'Open' : 'Gesloten' }}
                     </span>
-                    <a href="{{ route('company.assignments.edit', $assignment) }}" class="text-xs font-semibold text-gray-500 hover:text-gray-900 transition">Bewerken</a>
-                    <a href="{{ route('company.applications.index', $assignment) }}" class="text-xs font-semibold text-gray-500 hover:text-gray-900 transition">Reacties</a>
+                    <a href="{{ route('company.jobs.edit', $job) }}" class="text-xs font-semibold text-gray-500 hover:text-gray-900 transition">Bewerken</a>
+                    <a href="{{ route('company.applications.index', $job) }}" class="text-xs font-semibold text-gray-500 hover:text-gray-900 transition">Reacties</a>
                 </div>
             </div>
             @empty
-            <p class="text-sm text-gray-400 py-4">Nog geen opdrachten. <a href="{{ route('company.assignments.create') }}" class="underline text-gray-600">Maak je eerste opdracht</a></p>
+            <p class="text-sm text-gray-400 py-4">Nog geen opdrachten. <a href="{{ route('company.jobs.create') }}" class="underline text-gray-600">Maak je eerste opdracht</a></p>
             @endforelse
         </div>
 

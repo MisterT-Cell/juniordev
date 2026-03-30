@@ -1,25 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-black text-2xl tracking-tight">Opdracht bewerken</h2>
+        <h2 class="font-black text-2xl tracking-tight">Vacature bewerken</h2>
     </x-slot>
 
     <div class="max-w-2xl mx-auto px-6 py-10">
         <div class="bg-white rounded-2xl border border-gray-200 p-8">
-            <form method="POST" action="{{ route('company.assignments.update', $assignment) }}" class="space-y-6">
+            <form method="POST" action="{{ route('company.jobs.update', $job) }}" class="space-y-6">
                 @csrf
                 @method('PUT')
 
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Titel *</label>
                     <x-text-input name="title" class="block w-full !rounded-xl !border-gray-200 focus:!border-gray-900 focus:!ring-0"
-                        :value="old('title', $assignment->title)" required />
+                        :value="old('title', $job->title)" required />
                     <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Beschrijving *</label>
                     <textarea name="description" rows="6" required
-                        class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 resize-none">{{ old('description', $assignment->description) }}</textarea>
+                        class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 resize-none">{{ old('description', $job->description) }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
@@ -28,7 +28,7 @@
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Type *</label>
                         <select name="type" required class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0">
                             @foreach(['stage','bijbaan','freelance','parttime','fulltime'] as $t)
-                                <option value="{{ $t }}" {{ old('type', $assignment->type) === $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>
+                                <option value="{{ $t }}" {{ old('type', $job->type) === $t ? 'selected' : '' }}>{{ ucfirst($t) }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('type')" class="mt-2" />
@@ -37,7 +37,7 @@
                         <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Regio *</label>
                         <select name="region" required class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0">
                             @foreach(['Amsterdam','Rotterdam','Utrecht','Den Haag','Eindhoven','Groningen','Tilburg','Remote'] as $r)
-                                <option value="{{ $r }}" {{ old('region', $assignment->region) === $r ? 'selected' : '' }}>{{ $r }}</option>
+                                <option value="{{ $r }}" {{ old('region', $job->region) === $r ? 'selected' : '' }}>{{ $r }}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('region')" class="mt-2" />
@@ -47,20 +47,20 @@
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Vereisten</label>
                     <textarea name="requirements" rows="4"
-                        class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 resize-none">{{ old('requirements', $assignment->requirements) }}</textarea>
+                        class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 resize-none">{{ old('requirements', $job->requirements) }}</textarea>
                     <x-input-error :messages="$errors->get('requirements')" class="mt-2" />
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Status</label>
                     <select name="status" class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0">
-                        <option value="open" {{ old('status', $assignment->status) === 'open' ? 'selected' : '' }}>Open</option>
-                        <option value="closed" {{ old('status', $assignment->status) === 'closed' ? 'selected' : '' }}>Gesloten</option>
+                        <option value="open" {{ old('status', $job->status) === 'open' ? 'selected' : '' }}>Open</option>
+                        <option value="closed" {{ old('status', $job->status) === 'closed' ? 'selected' : '' }}>Gesloten</option>
                     </select>
                 </div>
 
                 <div class="flex justify-between items-center pt-2">
-                    <a href="{{ route('company.assignments.index') }}" class="text-sm text-gray-400 hover:text-gray-700 transition">Annuleren</a>
+                    <a href="{{ route('company.jobs.index') }}" class="text-sm text-gray-400 hover:text-gray-700 transition">Annuleren</a>
                     <button type="submit" class="bg-[#0a0a0a] text-white font-bold px-6 py-3 rounded-full hover:bg-gray-800 transition text-sm">
                         Wijzigingen opslaan
                     </button>

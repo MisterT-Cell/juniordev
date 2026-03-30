@@ -9,13 +9,13 @@
             <div class="p-6 border-b border-gray-100 last:border-0">
                 <div class="flex flex-wrap justify-between items-start gap-3 mb-4">
                     <div>
-                        <a href="{{ route('assignments.show', $app->assignment) }}"
+                        <a href="{{ route('jobs.show', $app->job) }}"
                             class="font-bold text-gray-900 hover:text-indigo-600 transition">
-                            {{ $app->assignment->title }}
+                            {{ $app->job->title }}
                         </a>
                         <p class="text-sm text-gray-400 mt-0.5">
-                            {{ $app->assignment->company->companyProfile->company_name ?? $app->assignment->company->name }}
-                            · {{ $app->assignment->region }} · {{ ucfirst($app->assignment->type) }}
+                            {{ $app->job->company->companyProfile->company_name ?? $app->job->company->name }}
+                            · {{ $app->job->region }} · {{ ucfirst($app->job->type) }}
                         </p>
                         <p class="text-xs text-gray-400 mt-1">{{ $app->created_at->format('d-m-Y') }}</p>
                     </div>
@@ -31,7 +31,7 @@
             @empty
             <div class="p-16 text-center text-gray-400">
                 <p class="font-semibold text-lg mb-2">Nog geen reacties verstuurd.</p>
-                <a href="{{ route('assignments.index') }}" class="text-sm text-indigo-600 hover:underline">Bekijk opdrachten &rarr;</a>
+                <a href="{{ route('jobs.index') }}" class="text-sm text-indigo-600 hover:underline">Bekijk opdrachten &rarr;</a>
             </div>
             @endforelse
         </div>

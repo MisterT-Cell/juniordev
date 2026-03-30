@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JuniorDev — Vind je eerste opdracht</title>
+    <title>JuniorDev — Vind je eerste vacature</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
@@ -79,7 +79,7 @@
                 Junior<span class="text-[#c8f135]">Dev</span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm text-gray-400">
-                <a href="{{ route('assignments.index') }}" class="hover:text-white transition">Opdrachten</a>
+                <a href="{{ route('jobs.index') }}" class="hover:text-white transition">Vacatures</a>
                 @auth
                     <a href="{{ route('dashboard') }}" class="hover:text-white transition">Dashboard</a>
                     <a href="{{ route('messages.index') }}" class="hover:text-white transition">Berichten</a>
@@ -104,16 +104,16 @@
                 <h1 class="text-white font-black leading-[1.05] tracking-tight mb-8"
                     style="font-size: clamp(3rem, 7vw, 6rem);">
                     Jouw eerste<br>
-                    <span class="text-[#c8f135]">opdracht</span><br>
+                    <span class="text-[#c8f135]">vacature</span><br>
                     begint hier.
                 </h1>
                 <p class="text-gray-400 text-lg mb-10 max-w-xl leading-relaxed">
                     Verbindt junior developers met bedrijven die op zoek zijn naar vers talent. Stages, bijbanen, freelance — alles op één plek.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="{{ route('assignments.index') }}"
+                    <a href="{{ route('jobs.index') }}"
                         class="glow-btn bg-[#c8f135] text-black font-bold px-7 py-3.5 rounded-full hover:bg-[#d4f54e] transition text-sm">
-                        Bekijk opdrachten &rarr;
+                        Bekijk vacatures &rarr;
                     </a>
                     <a href="{{ route('register') }}"
                         class="glow-btn border border-white/20 text-white font-semibold px-7 py-3.5 rounded-full hover:border-white/50 transition text-sm">
@@ -127,8 +127,8 @@
         <div class="border-t border-white/10 bg-white/[0.02]">
             <div class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-3 divide-x divide-white/10">
                 <div class="px-8 first:pl-0">
-                    <div class="number-stat text-[#c8f135]">{{ \App\Models\Assignment::where('status','open')->count() }}</div>
-                    <div class="text-gray-500 text-sm mt-1">Open opdrachten</div>
+                    <div class="number-stat text-[#c8f135]">{{ \App\Models\Job::where('status','open')->count() }}</div>
+                    <div class="text-gray-500 text-sm mt-1">Open vacatures</div>
                 </div>
                 <div class="px-8">
                     <div class="number-stat text-white">{{ \App\Models\User::where('role','company')->count() }}</div>
@@ -152,37 +152,37 @@
         </div>
     </div>
 
-    {{-- OPDRACHTEN --}}
+    {{-- VACATURES --}}
     <section class="max-w-7xl mx-auto px-6 py-28">
         <div class="flex justify-between items-end mb-14">
             <div>
                 <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-3">Vers geplaatst</p>
-                <h2 class="font-black text-4xl tracking-tight">Nieuwste opdrachten</h2>
+                <h2 class="font-black text-4xl tracking-tight">Nieuwste vacatures</h2>
             </div>
-            <a href="{{ route('assignments.index') }}" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition hidden md:block">
-                Alle bekijken &rarr;
+            <a href="{{ route('jobs.index') }}" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition hidden md:block">
+                Alle vacatures &rarr;
             </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            @foreach(\App\Models\Assignment::with('company.companyProfile')->where('status','open')->latest()->take(3)->get() as $i => $assignment)
-            <a href="{{ route('assignments.show', $assignment) }}"
+            @foreach(\App\Models\Job::with('company.companyProfile')->where('status','open')->latest()->take(3)->get() as $job)
+            <a href="{{ route('jobs.show', $job) }}"
                 class="card-hover block rounded-2xl p-7 border border-gray-200 bg-white group">
                 <div class="flex justify-between items-start mb-6">
                     <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">
-                        {{ $assignment->type }}
+                        {{ $job->type }}
                     </span>
-                    <span class="text-xs text-gray-400">{{ $assignment->region }}</span>
+                    <span class="text-xs text-gray-400">{{ $job->region }}</span>
                 </div>
                 <h3 class="font-bold text-lg leading-snug mb-3 group-hover:text-indigo-600 transition">
-                    {{ $assignment->title }}
+                    {{ $job->title }}
                 </h3>
                 <p class="text-gray-500 text-sm leading-relaxed mb-6">
-                    {{ Str::limit($assignment->description, 110) }}
+                    {{ Str::limit($job->description, 110) }}
                 </p>
                 <div class="flex justify-between items-center pt-5 border-t border-gray-100">
                     <span class="text-sm font-medium text-gray-700">
-                        {{ $assignment->company->companyProfile->company_name ?? $assignment->company->name }}
+                        {{ $job->company->companyProfile->company_name ?? $job->company->name }}
                     </span>
                     <span class="text-sm font-bold text-indigo-600 group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
                 </div>
@@ -191,7 +191,7 @@
         </div>
 
         <div class="text-center mt-10 md:hidden">
-            <a href="{{ route('assignments.index') }}" class="text-sm font-semibold text-gray-500 hover:text-gray-900">Alle bekijken &rarr;</a>
+            <a href="{{ route('jobs.index') }}" class="text-sm font-semibold text-gray-500 hover:text-gray-900">Alle vacatures &rarr;</a>
         </div>
     </section>
 
@@ -210,7 +210,7 @@
                         Voor studenten
                     </div>
                     <div class="space-y-6">
-                        @foreach(['Maak een gratis account aan als student', 'Vul je profiel in met skills en regio', 'Reageer op opdrachten die bij je passen'] as $i => $step)
+                        @foreach(['Maak een gratis account aan als student', 'Vul je profiel in met skills en regio', 'Reageer op vacatures die bij je passen'] as $i => $step)
                         <div class="flex items-start gap-4">
                             <div class="shrink-0 w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-sm font-bold text-gray-400">
                                 {{ $i + 1 }}
@@ -248,7 +248,7 @@
                 <h2 class="font-black text-3xl md:text-4xl tracking-tight text-black mb-2">
                     Klaar om te beginnen?
                 </h2>
-                <p class="text-black/60 text-lg">Maak gratis een account aan en vind je eerste opdracht.</p>
+                <p class="text-black/60 text-lg">Maak gratis een account aan en vind je eerste vacature.</p>
             </div>
             <a href="{{ route('register') }}"
                 class="shrink-0 bg-black text-white font-bold px-8 py-4 rounded-full hover:bg-gray-900 transition text-sm whitespace-nowrap">

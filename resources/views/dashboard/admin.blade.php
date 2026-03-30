@@ -15,8 +15,8 @@
                 <div class="text-sm text-gray-500 mt-1">Bedrijven</div>
             </div>
             <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
-                <div class="text-4xl font-black tracking-tight text-[#5a7a00]">{{ $stats['assignments'] }}</div>
-                <div class="text-sm text-gray-500 mt-1">Opdrachten</div>
+                <div class="text-4xl font-black tracking-tight text-[#5a7a00]">{{ $stats['jobs'] }}</div>
+                <div class="text-sm text-gray-500 mt-1">Vacatures</div>
             </div>
             <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center">
                 <div class="text-4xl font-black tracking-tight text-yellow-600">{{ $stats['applications'] }}</div>
@@ -30,9 +30,9 @@
                 <p class="text-gray-400 text-sm">Bekijk, blokkeer of verwijder gebruikers van het platform.</p>
                 <span class="inline-block mt-5 text-sm font-bold text-[#c8f135]">Beheren &rarr;</span>
             </a>
-            <a href="{{ route('admin.assignments') }}" class="card-hover bg-white border border-gray-200 rounded-2xl p-8 group">
-                <h3 class="font-black text-xl mb-2 group-hover:text-indigo-600 transition">Opdrachtenbeheer</h3>
-                <p class="text-gray-400 text-sm">Beheer alle opdrachten die op het platform staan.</p>
+            <a href="{{ route('admin.jobs') }}" class="card-hover bg-white border border-gray-200 rounded-2xl p-8 group">
+                <h3 class="font-black text-xl mb-2 group-hover:text-indigo-600 transition">Vacaturebeheer</h3>
+                <p class="text-gray-400 text-sm">Beheer alle vacatures die op het platform staan.</p>
                 <span class="inline-block mt-5 text-sm font-bold text-indigo-600">Beheren &rarr;</span>
             </a>
         </div>

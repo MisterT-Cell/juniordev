@@ -7,7 +7,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('assignment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('job_id')->constrained('job_listings')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('motivation');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');

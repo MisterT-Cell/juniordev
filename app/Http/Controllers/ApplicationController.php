@@ -3,24 +3,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Application;
-use App\Models\Assignment;
+use App\Models\Job;
 use App\Notifications\ApplicationReceived;
 use App\Notifications\ApplicationStatusChanged;
 
 class ApplicationController extends Controller
 {
-    public function store(Request $request, Assignment $assignment)
+    public function store(Request $request, Job $job)
     {
-        if ($assignment->status === 'closed') {
-            return back()->with('error', 'Deze opdracht is gesloten.');
+        if ($job->status === 'closed') {
+            return back()->with('error', 'Deze vacature is gesloten.');
         }
 
-        $exists = Application::where('assignment_id', $assignment->id)
+        $exists = Application::where('job_id', $job->id)
             ->where('user_id', auth()->id())
             ->exists();
 
         if ($exists) {
-            return back()->with('error', 'Je hebt al gereageerd op deze opdracht.');
+            return back()->with('error', 'Je hebt al gereageerd op deze vacature.');
         }
 
         $validated = $request->validate([
@@ -28,34 +28,33 @@ class ApplicationController extends Controller
         ]);
 
         $application = Application::create([
-            'assignment_id' => $assignment->id,
-            'user_id' => auth()->id(),
+            'job_id'     => $job->id,
+            'user_id'    => auth()->id(),
             'motivation' => $validated['motivation'],
         ]);
 
-        // Notify company
-        $assignment->company->notify(new ApplicationReceived($application));
+        $job->company->notify(new ApplicationReceived($application));
 
         return redirect()->route('student.applications.index')->with('success', 'Reactie verstuurd!');
     }
 
     public function studentIndex()
     {
-        $applications = Application::with('assignment.company.companyProfile')
+        $applications = Application::with('job.company.companyProfile')
             ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
         return view('student.applications.index', compact('applications'));
     }
 
-    public function companyIndex(Assignment $assignment)
+    public function companyIndex(Job $job)
     {
-        $this->authorize('view', $assignment);
+        $this->authorize('view', $job);
         $applications = Application::with('student.studentProfile')
-            ->where('assignment_id', $assignment->id)
+            ->where('job_id', $job->id)
             ->latest()
             ->paginate(10);
-        return view('company.applications.index', compact('applications', 'assignment'));
+        return view('company.applications.index', compact('applications', 'job'));
     }
 
     public function updateStatus(Request $request, Application $application)
@@ -67,8 +66,6 @@ class ApplicationController extends Controller
         ]);
 
         $application->update($validated);
-
-        // Notify student
         $application->student->notify(new ApplicationStatusChanged($application));
 
         return back()->with('success', 'Status bijgewerkt!');

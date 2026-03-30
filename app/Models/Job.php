@@ -4,9 +4,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Assignment extends Model
+class Job extends Model
 {
     use HasFactory;
+
+    protected $table = 'job_listings';
 
     protected $fillable = ['user_id', 'title', 'description', 'type', 'region', 'requirements', 'status'];
 

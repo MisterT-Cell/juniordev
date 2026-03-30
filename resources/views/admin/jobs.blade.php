@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-black text-2xl tracking-tight">Opdrachtenbeheer</h2>
+        <h2 class="font-black text-2xl tracking-tight">Vacaturebeheer</h2>
     </x-slot>
 
     <div class="max-w-6xl mx-auto px-6 py-10">
@@ -22,20 +22,20 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @foreach($assignments as $assignment)
+                    @foreach($jobs as $job)
                     <tr>
-                        <td class="px-5 py-4 text-sm font-semibold text-gray-900">{{ $assignment->title }}</td>
-                        <td class="px-5 py-4 text-sm text-gray-500">{{ $assignment->company->companyProfile->company_name ?? $assignment->company->name }}</td>
-                        <td class="px-5 py-4 text-xs text-gray-500">{{ ucfirst($assignment->type) }}</td>
-                        <td class="px-5 py-4 text-xs text-gray-500">{{ $assignment->region }}</td>
+                        <td class="px-5 py-4 text-sm font-semibold text-gray-900">{{ $job->title }}</td>
+                        <td class="px-5 py-4 text-sm text-gray-500">{{ $job->company->companyProfile->company_name ?? $job->company->name }}</td>
+                        <td class="px-5 py-4 text-xs text-gray-500">{{ ucfirst($job->type) }}</td>
+                        <td class="px-5 py-4 text-xs text-gray-500">{{ $job->region }}</td>
                         <td class="px-5 py-4">
-                            <span class="text-xs font-bold px-2.5 py-1 rounded-full {{ $assignment->status === 'open' ? 'bg-[#c8f135]/30 text-gray-700' : 'bg-gray-100 text-gray-500' }}">
-                                {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-full {{ $job->status === 'open' ? 'bg-[#c8f135]/30 text-gray-700' : 'bg-gray-100 text-gray-500' }}">
+                                {{ $job->status === 'open' ? 'Open' : 'Gesloten' }}
                             </span>
                         </td>
                         <td class="px-5 py-4 text-right">
-                            <form method="POST" action="{{ route('admin.assignments.destroy', $assignment) }}"
-                                onsubmit="return confirm('Opdracht verwijderen?')">
+                            <form method="POST" action="{{ route('admin.jobs.destroy', $job) }}"
+                                onsubmit="return confirm('Vacature verwijderen?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-xs font-semibold bg-red-50 text-red-600 px-3 py-1.5 rounded-full hover:bg-red-100 transition">
                                     Verwijderen
@@ -48,6 +48,6 @@
             </table>
         </div>
 
-        <div class="mt-5">{{ $assignments->links() }}</div>
+        <div class="mt-5">{{ $jobs->links() }}</div>
     </div>
 </x-app-layout>

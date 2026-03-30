@@ -7,6 +7,6 @@ use App\Models\User;
 class ApplicationPolicy
 {
     public function update(User $user, Application $application): bool {
-        return $user->id === $application->assignment->user_id || $user->isAdmin();
+        return $user->id === $application->job->user_id || $user->isAdmin();
     }
 }

@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <div>
-            <a href="{{ route('company.assignments.index') }}" class="text-sm text-gray-400 hover:text-gray-700">&larr; Terug naar opdrachten</a>
-            <h2 class="font-black text-2xl tracking-tight mt-1">Reacties: {{ $assignment->title }}</h2>
+            <a href="{{ route('company.jobs.index') }}" class="text-sm text-gray-400 hover:text-gray-700">&larr; Terug naar opdrachten</a>
+            <h2 class="font-black text-2xl tracking-tight mt-1">Reacties: {{ $job->title }}</h2>
         </div>
     </x-slot>
 

@@ -48,8 +48,8 @@
                 @forelse($applications as $app)
                 <div class="py-3.5 border-b border-gray-100 last:border-0 flex justify-between items-start gap-3">
                     <div>
-                        <p class="font-semibold text-sm text-gray-900">{{ $app->assignment->title }}</p>
-                        <p class="text-xs text-gray-400 mt-0.5">{{ $app->assignment->company->companyProfile->company_name ?? $app->assignment->company->name }}</p>
+                        <p class="font-semibold text-sm text-gray-900">{{ $app->job->title }}</p>
+                        <p class="text-xs text-gray-400 mt-0.5">{{ $app->job->company->companyProfile->company_name ?? $app->job->company->name }}</p>
                     </div>
                     @php $colors = ['pending'=>'bg-yellow-100 text-yellow-700','accepted'=>'bg-[#c8f135]/30 text-gray-700','rejected'=>'bg-red-100 text-red-600']; @endphp
                     <span class="text-xs font-bold px-2.5 py-1 rounded-full shrink-0 {{ $colors[$app->status] }}">
@@ -57,21 +57,21 @@
                     </span>
                 </div>
                 @empty
-                <p class="text-sm text-gray-400 py-4">Nog geen reacties. <a href="{{ route('assignments.index') }}" class="underline text-gray-600">Bekijk opdrachten</a></p>
+                <p class="text-sm text-gray-400 py-4">Nog geen reacties. <a href="{{ route('jobs.index') }}" class="underline text-gray-600">Bekijk vacatures</a></p>
                 @endforelse
             </div>
 
-            {{-- Nieuwe opdrachten --}}
+            {{-- Nieuwe vacatures --}}
             <div class="bg-white rounded-2xl border border-gray-200 p-6">
                 <div class="flex justify-between items-center mb-5">
-                    <h3 class="font-black text-base">Nieuwe opdrachten</h3>
-                    <a href="{{ route('assignments.index') }}" class="text-xs font-semibold text-gray-400 hover:text-gray-700 transition">Alle bekijken &rarr;</a>
+                    <h3 class="font-black text-base">Nieuwe vacatures</h3>
+                    <a href="{{ route('jobs.index') }}" class="text-xs font-semibold text-gray-400 hover:text-gray-700 transition">Alle bekijken &rarr;</a>
                 </div>
-                @foreach($latestAssignments as $assignment)
-                <a href="{{ route('assignments.show', $assignment) }}" class="py-3.5 border-b border-gray-100 last:border-0 flex justify-between items-start gap-3 group">
+                @foreach($latestJobs as $job)
+                <a href="{{ route('jobs.show', $job) }}" class="py-3.5 border-b border-gray-100 last:border-0 flex justify-between items-start gap-3 group">
                     <div>
-                        <p class="font-semibold text-sm text-gray-900 group-hover:text-indigo-600 transition">{{ $assignment->title }}</p>
-                        <p class="text-xs text-gray-400 mt-0.5">{{ $assignment->region }} · {{ $assignment->type }}</p>
+                        <p class="font-semibold text-sm text-gray-900 group-hover:text-indigo-600 transition">{{ $job->title }}</p>
+                        <p class="text-xs text-gray-400 mt-0.5">{{ $job->region }} · {{ $job->type }}</p>
                     </div>
                     <span class="text-gray-300 group-hover:text-indigo-600 transition shrink-0">&rarr;</span>
                 </a>

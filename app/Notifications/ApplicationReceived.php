@@ -18,8 +18,8 @@ class ApplicationReceived extends Notification
         return (new MailMessage)
             ->subject('Nieuwe reactie op uw opdracht')
             ->greeting('Hallo ' . $notifiable->name . '!')
-            ->line($this->application->student->name . ' heeft gereageerd op: ' . $this->application->assignment->title)
-            ->action('Bekijk reactie', url('/company/assignments/' . $this->application->assignment_id . '/applications'))
+            ->line($this->application->student->name . ' heeft gereageerd op: ' . $this->application->job->title)
+            ->action('Bekijk reactie', url('/company/jobs/' . $this->application->job_id . '/applications'))
             ->line('Bedankt voor het gebruik van JuniorDev!');
     }
 }

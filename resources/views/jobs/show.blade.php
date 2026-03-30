@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3 flex-wrap">
-            <a href="{{ route('assignments.index') }}" class="text-gray-400 hover:text-gray-700 text-sm">&larr; Terug</a>
+            <a href="{{ route('jobs.index') }}" class="text-gray-400 hover:text-gray-700 text-sm">&larr; Terug</a>
             <span class="text-gray-300">/</span>
-            <h2 class="font-black text-2xl tracking-tight">{{ $assignment->title }}</h2>
+            <h2 class="font-black text-2xl tracking-tight">{{ $job->title }}</h2>
         </div>
     </x-slot>
 
@@ -20,34 +20,34 @@
 
             {{-- Meta --}}
             <div class="flex flex-wrap gap-2 mb-6">
-                <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{{ ucfirst($assignment->type) }}</span>
-                <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{{ $assignment->region }}</span>
-                <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full {{ $assignment->status === 'open' ? 'bg-[#c8f135]/30 text-gray-800' : 'bg-red-100 text-red-600' }}">
-                    {{ $assignment->status === 'open' ? 'Open' : 'Gesloten' }}
+                <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{{ ucfirst($job->type) }}</span>
+                <span class="text-xs font-bold uppercase tracking-widest bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full">{{ $job->region }}</span>
+                <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full {{ $job->status === 'open' ? 'bg-[#c8f135]/30 text-gray-800' : 'bg-red-100 text-red-600' }}">
+                    {{ $job->status === 'open' ? 'Open' : 'Gesloten' }}
                 </span>
             </div>
 
             <div class="flex justify-between items-start gap-4 mb-8 pb-8 border-b border-gray-100">
                 <div>
                     <p class="text-sm text-gray-500 mb-0.5">Geplaatst door</p>
-                    <p class="font-bold text-gray-900">{{ $assignment->company->companyProfile->company_name ?? $assignment->company->name }}</p>
+                    <p class="font-bold text-gray-900">{{ $job->company->companyProfile->company_name ?? $job->company->name }}</p>
                 </div>
                 <div class="text-right">
                     <p class="text-sm text-gray-500 mb-0.5">Reacties</p>
-                    <p class="font-bold text-gray-900">{{ $assignment->applications->count() }}</p>
+                    <p class="font-bold text-gray-900">{{ $job->applications->count() }}</p>
                 </div>
             </div>
 
             {{-- Description --}}
             <div class="mb-8">
                 <h3 class="font-black text-lg mb-4">Beschrijving</h3>
-                <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $assignment->description }}</div>
+                <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $job->description }}</div>
             </div>
 
-            @if($assignment->requirements)
+            @if($job->requirements)
             <div class="mb-8">
                 <h3 class="font-black text-lg mb-4">Vereisten</h3>
-                <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $assignment->requirements }}</div>
+                <div class="text-gray-600 leading-relaxed whitespace-pre-line">{{ $job->requirements }}</div>
             </div>
             @endif
 
@@ -56,13 +56,13 @@
                 @if(auth()->user()->isStudent())
                     @if($hasApplied)
                         <div class="bg-[#c8f135]/20 border border-[#c8f135] rounded-2xl p-5">
-                            <p class="font-bold text-gray-800 mb-1">Je hebt al gereageerd op deze opdracht.</p>
+                            <p class="font-bold text-gray-800 mb-1">Je hebt al gereageerd op deze vacature.</p>
                             <a href="{{ route('student.applications.index') }}" class="text-sm text-gray-600 underline">Bekijk je reacties</a>
                         </div>
-                    @elseif($assignment->status === 'open')
+                    @elseif($job->status === 'open')
                         <div class="border-t border-gray-100 pt-8">
-                            <h3 class="font-black text-lg mb-6">Reageer op deze opdracht</h3>
-                            <form method="POST" action="{{ route('applications.store', $assignment) }}">
+                            <h3 class="font-black text-lg mb-6">Reageer op deze vacature</h3>
+                            <form method="POST" action="{{ route('applications.store', $job) }}">
                                 @csrf
                                 <div class="mb-5">
                                     <label class="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">
@@ -80,7 +80,7 @@
                         </div>
                     @else
                         <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 text-gray-500 text-sm">
-                            Deze opdracht is gesloten voor nieuwe reacties.
+                            Deze vacature is gesloten voor nieuwe reacties.
                         </div>
                     @endif
                 @endif

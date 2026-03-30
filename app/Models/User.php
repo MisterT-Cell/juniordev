@@ -28,7 +28,7 @@ class User extends Authenticatable
 
     public function studentProfile() { return $this->hasOne(StudentProfile::class); }
     public function companyProfile() { return $this->hasOne(CompanyProfile::class); }
-    public function assignments() { return $this->hasMany(Assignment::class); }
+    public function jobs() { return $this->hasMany(Job::class); }
     public function applications() { return $this->hasMany(Application::class); }
     public function sentMessages() { return $this->hasMany(Message::class, 'sender_id'); }
     public function receivedMessages() { return $this->hasMany(Message::class, 'receiver_id'); }

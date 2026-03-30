@@ -8,8 +8,8 @@ class Application extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['assignment_id', 'user_id', 'motivation', 'status'];
+    protected $fillable = ['job_id', 'user_id', 'motivation', 'status'];
 
-    public function assignment() { return $this->belongsTo(Assignment::class); }
+    public function job() { return $this->belongsTo(Job::class); }
     public function student() { return $this->belongsTo(User::class, 'user_id'); }
 }
