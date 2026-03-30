@@ -26,11 +26,16 @@
                     ['02', 'Profiel invullen',    'Voeg je skills, regio en opleiding toe.'],
                     ['03', 'Reageer op vacatures','Stuur een motivatie en word opgemerkt.'],
                 ] as [$n, $title, $desc])
-                <div class="px-8 py-7 border-b border-white/[0.05] last:border-0 flex items-start gap-6">
-                    <span class="step-num flex-shrink-0 w-14 text-right leading-none pt-1">{{ $n }}</span>
+                <div class="group px-8 py-7 border-b border-white/[0.05] last:border-0 flex items-start gap-6
+                            cursor-default transition-all duration-200
+                            hover:bg-white/[0.05] hover:pl-10">
+                    <span class="step-num flex-shrink-0 w-14 text-right leading-none pt-1
+                                 transition-colors duration-200 group-hover:text-[#c8f135]">{{ $n }}</span>
                     <div>
-                        <p class="font-bold text-white mb-1">{{ $title }}</p>
-                        <p class="text-gray-500 text-sm">{{ $desc }}</p>
+                        <p class="font-bold text-white mb-1 transition-colors duration-200
+                                  group-hover:text-[#c8f135]">{{ $title }}</p>
+                        <p class="text-gray-500 text-sm transition-colors duration-200
+                                  group-hover:text-gray-300">{{ $desc }}</p>
                     </div>
                 </div>
                 @endforeach
@@ -47,11 +52,16 @@
                     ['02', 'Vacature plaatsen',       'Beschrijf de functie, regio en vereisten.'],
                     ['03', 'Kandidaten selecteren',   'Bekijk reacties en kies de beste match.'],
                 ] as [$n, $title, $desc])
-                <div class="px-8 py-7 border-b border-white/[0.05] last:border-0 flex items-start gap-6">
-                    <span class="step-num flex-shrink-0 w-14 text-right leading-none pt-1">{{ $n }}</span>
+                <div class="group px-8 py-7 border-b border-white/[0.05] last:border-0 flex items-start gap-6
+                            cursor-default transition-all duration-200
+                            hover:bg-white/[0.05] hover:pl-10">
+                    <span class="step-num flex-shrink-0 w-14 text-right leading-none pt-1
+                                 transition-colors duration-200 group-hover:text-[#c8f135]">{{ $n }}</span>
                     <div>
-                        <p class="font-bold text-white mb-1">{{ $title }}</p>
-                        <p class="text-gray-500 text-sm">{{ $desc }}</p>
+                        <p class="font-bold text-white mb-1 transition-colors duration-200
+                                  group-hover:text-[#c8f135]">{{ $title }}</p>
+                        <p class="text-gray-500 text-sm transition-colors duration-200
+                                  group-hover:text-gray-300">{{ $desc }}</p>
                     </div>
                 </div>
                 @endforeach
