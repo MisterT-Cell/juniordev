@@ -1,59 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# JuniorDev
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Een Laravel 12 platform dat junior developers koppelt aan bedrijven. Studenten kunnen vacatures bekijken en solliciteren, bedrijven kunnen vacatures plaatsen en kandidaten beheren.
 
-## About Laravel
+## Tech stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 12** — MVC framework
+- **Laravel Breeze** — authenticatie (Blade stack)
+- **Tailwind CSS** — styling met custom dark/lime design
+- **SQLite** — database (via Laravel Herd)
+- **Eloquent ORM** — modellen en relaties
+- **Laravel Policies** — autorisatie per rol
+- **Laravel Notifications** — e-mailmeldingen
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Rollen
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Rol | Mogelijkheden |
+|---|---|
+| **Student** | Registreren, profiel invullen, vacatures bekijken, solliciteren, berichten sturen |
+| **Bedrijf** | Registreren, bedrijfsprofiel invullen, vacatures plaatsen/bewerken, sollicitanten beheren, berichten sturen |
+| **Admin** | Gebruikers en vacatures beheren, statistieken bekijken |
 
-## Learning Laravel
+## Projectstructuur
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```
+app/
+├── Http/
+│   ├── Controllers/
+│   │   ├── JobController.php          # Vacatures (bekijken, aanmaken, bewerken)
+│   │   ├── ApplicationController.php  # Sollicitaties beheren
+│   │   ├── DashboardController.php    # Dashboard per rol
+│   │   ├── AdminController.php        # Beheerderspanel
+│   │   ├── MessageController.php      # Berichten
+│   │   └── ProfileController.php      # Profielbeheer
+│   └── Middleware/
+│       └── CheckRole.php              # Rol-gebaseerde toegangsbeveiliging
+├── Models/
+│   ├── User.php                       # Gebruiker (student/company/admin)
+│   ├── Job.php                        # Vacature (tabel: job_listings)
+│   ├── Application.php                # Sollicitatie
+│   ├── Message.php                    # Bericht
+│   ├── StudentProfile.php             # Studentprofiel
+│   └── CompanyProfile.php             # Bedrijfsprofiel
+├── Policies/
+│   ├── JobPolicy.php                  # Wie mag vacatures bewerken/verwijderen
+│   └── ApplicationPolicy.php         # Wie mag sollicitaties inzien/updaten
+└── Notifications/
+    ├── ApplicationReceived.php        # Mail bij nieuwe sollicitatie
+    ├── ApplicationStatusChanged.php   # Mail bij statuswijziging
+    └── NewMessageReceived.php         # Mail bij nieuw bericht
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+database/
+├── migrations/                        # Tabelstructuur
+├── factories/                         # Faker-gebaseerde testdata
+└── seeders/DatabaseSeeder.php         # Vult de database met testdata
 
-## Laravel Sponsors
+resources/views/
+├── jobs/                              # Vacatures overzicht en detailpagina
+├── company/jobs/                      # Vacatures aanmaken/bewerken (bedrijf)
+├── company/applications/              # Sollicitanten bekijken (bedrijf)
+├── student/applications/              # Mijn sollicitaties (student)
+├── dashboard/                         # Dashboards per rol
+├── messages/                          # Berichten
+├── admin/                             # Beheerderspanel
+└── layouts/                           # App layout en navigatie
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+routes/web.php                         # Alle routes gegroepeerd per rol
+```
 
-### Premium Partners
+## Installatie
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+# Kloon het project
+git clone <repo-url>
+cd juniordev
 
-## Contributing
+# Installeer dependencies
+composer install
+npm install
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Omgevingsvariabelen instellen
+cp .env.example .env
+php artisan key:generate
 
-## Code of Conduct
+# Database aanmaken en vullen met testdata
+touch database/database.sqlite
+php artisan migrate:fresh --seed
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Frontend bouwen
+npm run dev
+```
 
-## Security Vulnerabilities
+> Met **Laravel Herd** open je de site op `http://juniordev.test` — geen verdere configuratie nodig.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Testaccounts (na seeder)
 
-## License
+Na `php artisan migrate:fresh --seed` zijn de volgende accounts beschikbaar:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Rol | E-mail | Wachtwoord |
+|---|---|---|
+| Admin | admin@juniordev.nl | password |
+| Bedrijf | (zie seeder output) | password |
+| Student | (zie seeder output) | password |
+
+## Routes
+
+| URL | Naam | Beschrijving |
+|---|---|---|
+| `/` | `home` | Homepage |
+| `/vacatures` | `jobs.index` | Alle vacatures |
+| `/vacatures/{job}` | `jobs.show` | Vacature detail |
+| `/company/jobs` | `company.jobs.index` | Mijn vacatures (bedrijf) |
+| `/company/jobs/create` | `company.jobs.create` | Nieuwe vacature |
+| `/dashboard` | `dashboard` | Dashboard (rol-afhankelijk) |
+| `/messages` | `messages.index` | Berichten |
+| `/admin/users` | `admin.users` | Gebruikersbeheer |
+| `/admin/jobs` | `admin.jobs` | Vacaturebeheer |
+
+## Ontwerp
+
+Dark/lime kleurschema:
+
+- **Achtergrond:** `#f8f7f4` (gebroken wit)
+- **Navigatie:** `#0a0a0a` (bijna zwart)
+- **Accent:** `#c8f135` (lime groen)
+- **Knoppen:** `rounded-full` met zwarte achtergrond
+- **Kaarten:** `rounded-2xl` met subtiele border
