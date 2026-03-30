@@ -1,52 +1,104 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+
+    <div class="mb-8">
+        <h1 class="font-black text-2xl tracking-tight text-gray-900">Account aanmaken</h1>
+        <p class="text-gray-400 text-sm mt-1">Gratis starten op JuniorDev</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-5" x-data="{ role: '{{ old('role') }}' }">
         @csrf
 
-        <!-- Name -->
+        {{-- Role selection --}}
         <div>
-            <x-input-label for="name" value="Naam" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Ik ben een...</p>
+            <div class="grid grid-cols-2 gap-3">
+
+                <label class="cursor-pointer">
+                    <input type="radio" name="role" value="student" x-model="role" class="sr-only" required />
+                    <div :class="role === 'student'
+                            ? 'border-[#0a0a0a] bg-[#0a0a0a] text-white'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-400'"
+                        class="border-2 rounded-2xl p-4 transition text-center select-none">
+                        <div class="text-2xl mb-2">🎓</div>
+                        <p class="font-bold text-sm">Student</p>
+                        <p class="text-xs opacity-60 mt-0.5">Junior developer</p>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" name="role" value="company" x-model="role" class="sr-only" required />
+                    <div :class="role === 'company'
+                            ? 'border-[#c8f135] bg-[#c8f135] text-[#0a0a0a]'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-gray-400'"
+                        class="border-2 rounded-2xl p-4 transition text-center select-none">
+                        <div class="text-2xl mb-2">🏢</div>
+                        <p class="font-bold text-sm">Bedrijf</p>
+                        <p class="text-xs opacity-60 mt-0.5">Vacatures plaatsen</p>
+                    </div>
+                </label>
+
+            </div>
+            <x-input-error :messages="$errors->get('role')" class="mt-1.5" />
         </div>
 
-        <!-- Email -->
-        <div class="mt-4">
-            <x-input-label for="email" value="E-mailadres" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div>
+            <label for="name" class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
+                Naam
+            </label>
+            <input id="name" type="text" name="name"
+                value="{{ old('name') }}"
+                required autofocus
+                class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 bg-white"
+                placeholder="Jan de Vries" />
+            <x-input-error :messages="$errors->get('name')" class="mt-1.5" />
         </div>
 
-        <!-- Role -->
-        <div class="mt-4">
-            <x-input-label for="role" value="Ik ben een..." />
-            <select id="role" name="role" required
-                class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                <option value="">-- Kies je rol --</option>
-                <option value="student" {{ old('role') === 'student' ? 'selected' : '' }}>Student / Junior Developer</option>
-                <option value="company" {{ old('role') === 'company' ? 'selected' : '' }}>Bedrijf</option>
-            </select>
-            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        <div>
+            <label for="email" class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
+                E-mailadres
+            </label>
+            <input id="email" type="email" name="email"
+                value="{{ old('email') }}"
+                required
+                class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 bg-white"
+                placeholder="jij@example.com" />
+            <x-input-error :messages="$errors->get('email')" class="mt-1.5" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" value="Wachtwoord" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <label for="password" class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
+                    Wachtwoord
+                </label>
+                <input id="password" type="password" name="password"
+                    required autocomplete="new-password"
+                    class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 bg-white"
+                    placeholder="••••••••" />
+                <x-input-error :messages="$errors->get('password')" class="mt-1.5" />
+            </div>
+            <div>
+                <label for="password_confirmation" class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
+                    Bevestigen
+                </label>
+                <input id="password_confirmation" type="password" name="password_confirmation"
+                    required
+                    class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 bg-white"
+                    placeholder="••••••••" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1.5" />
+            </div>
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" value="Wachtwoord bevestigen" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                Al geregistreerd?
-            </a>
-            <x-primary-button class="ms-4">Registreren</x-primary-button>
-        </div>
+        <button type="submit"
+            class="w-full bg-[#0a0a0a] text-white font-bold py-3 rounded-full hover:bg-gray-800 transition text-sm">
+            Account aanmaken
+        </button>
     </form>
+
+    <p class="text-center text-sm text-gray-400 mt-6">
+        Al een account?
+        <a href="{{ route('login') }}" class="text-gray-900 font-semibold hover:underline">
+            Inloggen
+        </a>
+    </p>
+
 </x-guest-layout>
