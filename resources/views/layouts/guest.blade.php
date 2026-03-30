@@ -28,7 +28,7 @@
             <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-[#c8f135] rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
 
             {{-- Logo --}}
-            <a href="{{ route('welcome') }}" class="flex items-center gap-3 relative z-10">
+            <a href="{{ url('/') }}" class="flex items-center gap-3 relative z-10">
                 <div class="w-10 h-10 bg-[#c8f135] rounded-xl flex items-center justify-center">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 7L3 11L7 15" stroke="#0a0a0a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -83,7 +83,7 @@
         <div class="flex-1 flex flex-col justify-center items-center px-6 py-12 lg:px-16 xl:px-24">
 
             {{-- Mobile logo --}}
-            <a href="{{ route('welcome') }}" class="flex items-center gap-2.5 mb-10 lg:hidden">
+            <a href="{{ url('/') }}" class="flex items-center gap-2.5 mb-10 lg:hidden">
                 <div class="w-9 h-9 bg-[#0a0a0a] rounded-xl flex items-center justify-center">
                     <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 7L3 11L7 15" stroke="#c8f135" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
