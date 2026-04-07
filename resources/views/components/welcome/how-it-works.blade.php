@@ -45,7 +45,7 @@
             <div class="border border-white/10 rounded-2xl overflow-hidden">
                 <div class="px-8 py-5 border-b border-white/10 flex items-center justify-between">
                     <span class="text-xs font-bold uppercase tracking-[0.15em] text-gray-500">Voor bedrijven</span>
-                    <span class="bg-white/10 text-white text-xs font-bold px-3 py-1 rounded-full">Onbeperkt</span>
+                    <span class="bg-white/10 text-white text-xs font-bold px-3 py-1 rounded-full">Tijdelijk gratis!!</span>
                 </div>
                 @foreach([
                     ['01', 'Bedrijf registreren',    'Maak een profiel met je bedrijfsinfo.'],
