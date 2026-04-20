@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s https://overpass-api.de/api/interpreter --data-urlencode \"data=[out:json][timeout:30];area[\"\"name\"\"=\"\"Amsterdam\"\"][\"\"boundary\"\"=\"\"administrative\"\"]->.city;\\(node[\"\"shop\"\"=\"\"hairdresser\"\"][\"\"name\"\"][\"\"!website\"\"][\"\"!contact:website\"\"]\\(area.city\\);\\);out center 5;\")",
+      "Bash(php artisan:*)",
+      "Bash(curl -s --max-time 60 https://overpass.kumi.systems/api/interpreter --data-urlencode \"data=[out:json][timeout:30];\\(node[\"\"shop\"\"=\"\"hairdresser\"\"][\"\"name\"\"][\"\"!website\"\"][\"\"!contact:website\"\"]\\(52.06,5.08,52.12,5.15\\);\\);out 5;\")",
+      "Bash(curl -s --max-time 60 -X POST \"https://overpass.kumi.systems/api/interpreter\" --data-urlencode 'data=[out:json][timeout:90];node[\"\"shop\"\"=\"\"bakery\"\"][\"\"name\"\"][\"\"!website\"\"]\\(52.12,4.44,52.18,4.52\\);out 5;')",
+      "Bash(curl -s --max-time 120 -X POST \"https://overpass-api.de/api/interpreter\" --data-urlencode 'data=[out:json][timeout:90];node[\"\"shop\"\"=\"\"bakery\"\"][\"\"name\"\"][\"\"!website\"\"]\\(52.12,4.44,52.18,4.52\\);out 5;')",
+      "Bash(curl -s --max-time 120 -X POST \"https://overpass-api.de/api/interpreter\" --data-urlencode 'data=[out:json][timeout:90];node[\"\"shop\"\"=\"\"bakery\"\"][\"\"name\"\"][\"\"!website\"\"]\\(52.14,4.47,52.17,4.50\\);out 5;')",
+      "Bash(curl -s --max-time 60 -X POST https://overpass.kumi.systems/api/interpreter --data-urlencode \"data=[out:json][timeout:60];node[\"\"shop\"\"][\"\"name\"\"][\"\"!website\"\"]\\(52.35,4.85,52.40,4.95\\);out 10;\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(len\\(d.get\\(''''elements'''',[]\\)\\), ''''resultaten''''\\); [print\\(f  - {e[''''tags''''].get\\(''''name'''',''''?''''\\)} \\({e[''''tags''''].get\\(''''shop'''',''''?''''\\)}\\)\\) for e in d.get\\(''''elements'''',[]\\)[:5]]\")",
+      "Bash(curl -s --max-time 15 \"https://overpass-api.de/api/status\")",
+      "Bash(curl -s --max-time 120 -X POST \"https://overpass-api.de/api/interpreter\" -d 'data=[out:json][timeout:90];node[\"\"shop\"\"=\"\"bakery\"\"][\"\"name\"\"][\"\"!website\"\"]\\(51.73,5.05,52.45,6.38\\);out 5;')"
+    ]
+  }
+}

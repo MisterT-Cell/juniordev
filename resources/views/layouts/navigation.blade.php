@@ -12,6 +12,10 @@
                 class="hover:text-white transition {{ request()->routeIs('jobs.*') ? 'text-white' : '' }}">
                 Vacatures
             </a>
+            <a href="{{ route('leads.index') }}"
+                class="hover:text-white transition {{ request()->routeIs('leads.*') ? 'text-white' : '' }}">
+                Bedrijven zonder site
+            </a>
             @auth
                 <a href="{{ route('dashboard') }}"
                     class="hover:text-white transition {{ request()->routeIs('dashboard') ? 'text-white' : '' }}">
@@ -100,6 +104,7 @@
     {{-- Mobile menu --}}
     <div :class="{'block': open, 'hidden': !open}" class="hidden md:hidden border-t border-white/10 px-6 py-4 space-y-3">
         <a href="{{ route('jobs.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Vacatures</a>
+        <a href="{{ route('leads.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Bedrijven zonder site</a>
         @auth
             <a href="{{ route('dashboard') }}" class="block text-sm text-gray-300 hover:text-white py-1">Dashboard</a>
             <a href="{{ route('messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Berichten</a>

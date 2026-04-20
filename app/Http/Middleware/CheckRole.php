@@ -13,7 +13,7 @@ class CheckRole
         }
         if (auth()->user()->is_blocked) {
             auth()->logout();
-            return redirect()->route('login')->with('error', 'Je account is geblokkeerd.');
+            return redirect()->route('login')->with('error', 'Je bent geblokkeerd door de beheerder neem contact op met de beheerder.');
         }
         if (!in_array(auth()->user()->role, $roles)) {
             abort(403, 'Geen toegang.');

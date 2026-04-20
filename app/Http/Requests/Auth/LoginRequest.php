@@ -50,6 +50,14 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        if (Auth::user()->is_blocked) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Je bent geblokkeerd door de beheerder neem contact op met de beheerder.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

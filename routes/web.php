@@ -7,6 +7,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LeadController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +16,10 @@ Route::get('/', function () {
 // Publieke vacatures
 Route::get('/vacatures', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/vacatures/{job}', [JobController::class, 'show'])->name('jobs.show');
+
+// Publieke leads pagina (bedrijven zonder website)
+Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
+Route::get('/leads/load-more', [LeadController::class, 'loadMore'])->name('leads.load-more');
 
 // Auth routes (Breeze)
 require __DIR__.'/auth.php';
@@ -59,6 +64,16 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/users/{user}', [AdminController::class, 'destroyUser'])->name('users.destroy');
         Route::get('/jobs', [AdminController::class, 'jobs'])->name('jobs');
         Route::delete('/jobs/{job}', [AdminController::class, 'destroyJob'])->name('jobs.destroy');
+
+        // Leads beheer
+        Route::get('/leads', [LeadController::class, 'adminIndex'])->name('leads.index');
+        Route::get('/leads/create', [LeadController::class, 'create'])->name('leads.create');
+        Route::post('/leads', [LeadController::class, 'store'])->name('leads.store');
+        Route::get('/leads/{lead}/edit', [LeadController::class, 'edit'])->name('leads.edit');
+        Route::put('/leads/{lead}', [LeadController::class, 'update'])->name('leads.update');
+        Route::delete('/leads/{lead}', [LeadController::class, 'destroy'])->name('leads.destroy');
+        Route::post('/leads/import', [LeadController::class, 'import'])->name('leads.import');
+        Route::post('/leads/scrape', [LeadController::class, 'scrape'])->name('leads.scrape');
     });
 
     // Profiel weergave
