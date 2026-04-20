@@ -22,7 +22,7 @@ class JobController extends Controller
         }
 
         $jobs = $query->latest()->paginate(12);
-        $regions = Job::distinct()->pluck('region')->filter()->sort()->values();
+        $regions = ['Groningen','Friesland','Drenthe','Overijssel','Flevoland','Gelderland','Utrecht','Noord-Holland','Zuid-Holland','Zeeland','Noord-Brabant','Limburg','Remote'];
         $types = Job::distinct()->pluck('type')->filter()->sort()->values();
 
         return view('jobs.index', compact('jobs', 'regions', 'types'));
@@ -86,6 +86,27 @@ class JobController extends Controller
         $this->authorize('delete', $job);
         $job->delete();
         return redirect()->route('company.jobs.index')->with('success', 'Vacature verwijderd!');
+    }
+
+    public function featured()
+    {
+        $jobs = Job::with('company.companyProfile')
+            ->where('status', 'open')
+            ->latest()
+            ->take(6)
+            ->get()
+            ->map(fn($job) => [
+                'id'          => $job->id,
+                'title'       => $job->title,
+                'description' => \Str::limit($job->description, 90),
+                'type'        => $job->type,
+                'region'      => $job->region,
+                'company'     => $job->company->companyProfile->company_name ?? $job->company->name,
+                'initial'     => strtoupper(substr($job->company->companyProfile->company_name ?? $job->company->name, 0, 1)),
+                'url'         => route('jobs.show', $job),
+            ]);
+
+        return response()->json(['jobs' => $jobs]);
     }
 
     public function myJobs()

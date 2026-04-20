@@ -15,6 +15,7 @@ Route::get('/', function () {
 
 // Publieke vacatures
 Route::get('/vacatures', [JobController::class, 'index'])->name('jobs.index');
+Route::get('/vacatures/featured', [JobController::class, 'featured'])->name('jobs.featured');
 Route::get('/vacatures/{job}', [JobController::class, 'show'])->name('jobs.show');
 
 // Publieke leads pagina (bedrijven zonder website)

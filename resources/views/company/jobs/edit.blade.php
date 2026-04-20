@@ -57,7 +57,7 @@
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Regio *</label>
                         <select name="region" required class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 bg-white">
-                            @foreach(['Amsterdam','Rotterdam','Utrecht','Den Haag','Eindhoven','Groningen','Tilburg','Remote'] as $r)
+                            @foreach(['Groningen','Friesland','Drenthe','Overijssel','Flevoland','Gelderland','Utrecht','Noord-Holland','Zuid-Holland','Zeeland','Noord-Brabant','Limburg','Remote'] as $r)
                                 <option value="{{ $r }}" {{ old('region', $job->region) === $r ? 'selected' : '' }}>
                                     {{ $r }}
                                 </option>
