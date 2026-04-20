@@ -99,7 +99,7 @@
                 <div class="absolute -bottom-5 -right-5 bg-[#c8f135] rounded-xl px-4 py-2.5 shadow-xl"
                     style="transform: rotate(2deg);">
                     <p class="text-xs font-black text-black leading-none">
-                        ✓ {{ $openJobs }} open {{ $openJobs === 1 ? 'vacature' : 'vacatures' }}
+                        <svg class="w-3.5 h-3.5 inline-block -mt-0.5 mr-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46-3.13-3.14a1 1 0 1 0-1.42 1.42l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.42Z"/></svg>{{ $openJobs }} open {{ $openJobs === 1 ? 'vacature' : 'vacatures' }}
                     </p>
                     <p class="text-xs text-black/50 mt-0.5">Vandaag bijgewerkt</p>
                 </div>

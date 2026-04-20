@@ -71,7 +71,9 @@
         {{-- ─── RESULTS ──────────────────────────────────── --}}
         @if($jobs->isEmpty())
             <div class="text-center py-28 text-gray-400">
-                <div class="text-5xl mb-4">🔍</div>
+                <div class="mb-4 flex justify-center">
+                    <svg class="w-12 h-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor"><path d="M21.71 20.29l-3.4-3.39A7.92 7.92 0 0 0 20 12a8 8 0 1 0-8 8 7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42ZM6 12a6 6 0 1 1 12 0 6 6 0 0 1-12 0Z"/></svg>
+                </div>
                 <p class="text-lg font-semibold text-gray-600 mb-1">Geen vacatures gevonden</p>
                 <p class="text-sm">Probeer andere zoektermen of verwijder de filters.</p>
                 <a href="{{ route('jobs.index') }}" class="inline-block mt-4 text-sm font-semibold text-gray-700 underline">

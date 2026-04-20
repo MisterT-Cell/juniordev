@@ -19,7 +19,9 @@
                             ? 'border-[#0a0a0a] bg-[#0a0a0a] text-white'
                             : 'border-gray-200 bg-white text-gray-700 hover:border-gray-400'"
                         class="border-2 rounded-2xl p-4 transition text-center select-none">
-                        <div class="text-2xl mb-2">🎓</div>
+                        <div class="mb-2">
+                            <svg class="w-7 h-7 mx-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M21.17 6.17l-8.5-4.25a1.5 1.5 0 0 0-1.34 0l-8.5 4.25A1 1 0 0 0 2.5 7a1 1 0 0 0 .33.83L5 9.28V14a1 1 0 0 0 .4.8l6 4.5a1 1 0 0 0 1.2 0l6-4.5A1 1 0 0 0 19 14V9.28l1.67-1.12A1 1 0 0 0 21.5 7a1 1 0 0 0-.33-.83ZM17 13.5l-5 3.75L7 13.5V10.28l4.67 3.12a1 1 0 0 0 1.1 0L17 10.28Zm-5 1.38L4.33 7 12 3.42 19.67 7Z"/></svg>
+                        </div>
                         <p class="font-bold text-sm">Student</p>
                         <p class="text-xs opacity-60 mt-0.5">Junior developer</p>
                     </div>
@@ -31,7 +33,9 @@
                             ? 'border-[#c8f135] bg-[#c8f135] text-[#0a0a0a]'
                             : 'border-gray-200 bg-white text-gray-700 hover:border-gray-400'"
                         class="border-2 rounded-2xl p-4 transition text-center select-none">
-                        <div class="text-2xl mb-2">🏢</div>
+                        <div class="mb-2">
+                            <svg class="w-7 h-7 mx-auto" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h1a1 1 0 0 0 0-2h-1a1 1 0 0 0 0 2Zm0 4h1a1 1 0 0 0 0-2h-1a1 1 0 0 0 0 2ZM9 8h1a1 1 0 0 0 0-2H9a1 1 0 0 0 0 2Zm0 4h1a1 1 0 0 0 0-2H9a1 1 0 0 0 0 2Zm12 8h-1V3a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v17H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm-8 0h-2v-4h2Zm5 0h-3v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5H6V4h12Z"/></svg>
+                        </div>
                         <p class="font-bold text-sm">Bedrijf</p>
                         <p class="text-xs opacity-60 mt-0.5">Vacatures plaatsen</p>
                     </div>
