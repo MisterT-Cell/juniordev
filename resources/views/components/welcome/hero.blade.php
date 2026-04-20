@@ -5,7 +5,6 @@
     $companies    = \App\Models\User::where('role','company')->count();
     $students     = \App\Models\User::where('role','student')->count();
 
-    // Pull unique skill-like words from requirements of recent jobs
     $recentSkills = \App\Models\Job::whereNotNull('requirements')
         ->latest()->take(6)->pluck('requirements')
         ->flatMap(fn($r) => explode(',', $r))
@@ -21,51 +20,58 @@
 
         {{-- Left: copy --}}
         <div class="relative z-10">
-            <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs text-gray-500 tracking-[0.12em] uppercase mb-10">
-                <span class="w-1.5 h-1.5 bg-[#c8f135] rounded-full animate-pulse"></span>
+            <div class="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-full px-4 py-1.5 text-xs text-gray-500 tracking-[0.12em] uppercase mb-10 hover:bg-white/10 transition">
+                <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse"></span>
                 Platform voor junior developers
             </div>
 
-            <h1 class="display text-white mb-8">
+            <h1 class="display text-white mb-8 text-balance">
                 Vind je<br>
                 <span class="outline-word">eerste</span><br>
-                <span class="text-[#c8f135]">vacature.</span>
+                <span class="bg-gradient-to-br from-brand to-[#a8d020] bg-clip-text text-transparent">vacature.</span>
             </h1>
 
-            <p class="text-gray-500 text-lg leading-relaxed mb-10 max-w-sm">
+            <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-10 max-w-md">
                 Verbindt junior developers met bedrijven die vers talent zoeken.
                 Stages, bijbanen en freelance — alles op één plek.
             </p>
 
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('jobs.index') }}"
-                    class="bg-[#c8f135] text-black font-bold px-7 py-3.5 rounded-full hover:bg-[#d4f54e] transition text-sm inline-flex items-center gap-2">
+                    class="group bg-brand text-black font-bold px-7 py-3.5 rounded-full hover:bg-brand-hover hover-glow transition text-sm inline-flex items-center gap-2 press">
                     Bekijk vacatures
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                     </svg>
                 </a>
                 <a href="{{ route('register') }}"
-                    class="border border-white/15 text-gray-300 font-semibold px-7 py-3.5 rounded-full hover:border-white/40 hover:text-white transition text-sm">
+                    class="border border-white/15 text-gray-300 font-semibold px-7 py-3.5 rounded-full hover:border-white/40 hover:text-white transition text-sm press">
                     Gratis account
                 </a>
             </div>
+
+            <p class="text-xs text-gray-600 mt-6 flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                </svg>
+                Gratis voor studenten — geen creditcard nodig
+            </p>
         </div>
 
         {{-- Right: floating real job card --}}
         @if($previewJob)
         <div class="hidden md:flex items-center justify-center relative z-10 py-8">
-            <div class="relative w-full max-w-sm">
+            <div class="relative w-full max-w-sm animate-fade-in-up" style="animation-delay: 0.3s">
 
                 {{-- Shadow card (behind) --}}
                 <div class="absolute inset-0 bg-white/5 border border-white/10 rounded-2xl"
-                    style="transform: rotate(4deg) translate(8px, 8px);"></div>
+                    style="transform: rotate(3deg) translate(8px, 8px);"></div>
 
                 {{-- Main card --}}
-                <div class="card-float relative bg-white rounded-2xl p-7 shadow-[0_32px_80px_rgba(0,0,0,0.5)]">
+                <div class="card-float relative bg-white rounded-2xl p-7 shadow-[0_32px_80px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.05)]">
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-[#0a0a0a] rounded-xl flex items-center justify-center text-white font-black text-sm flex-shrink-0">
+                            <div class="w-10 h-10 bg-dark rounded-xl flex items-center justify-center text-white font-black text-sm flex-shrink-0 shadow-sm">
                                 {{ strtoupper(substr($previewName, 0, 1)) }}
                             </div>
                             <div>
@@ -73,7 +79,7 @@
                                 <p class="text-xs text-gray-400">{{ $previewJob->region }}</p>
                             </div>
                         </div>
-                        <span class="text-xs font-bold bg-[#c8f135]/25 text-gray-700 px-3 py-1 rounded-full">
+                        <span class="text-xs font-bold bg-brand/25 text-gray-700 px-3 py-1 rounded-full">
                             {{ ucfirst($previewJob->type) }}
                         </span>
                     </div>
@@ -88,7 +94,7 @@
                     <div class="flex items-center justify-between">
                         <div class="flex gap-1.5 flex-wrap">
                             @foreach($recentSkills->take(2) as $skill)
-                                <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full font-medium">{{ $skill }}</span>
+                                <span class="text-xs bg-gray-900 text-white px-2.5 py-1 rounded-full font-medium">{{ $skill }}</span>
                             @endforeach
                         </div>
                         <span class="text-xs text-gray-400">{{ $previewJob->created_at->diffForHumans() }}</span>
@@ -96,8 +102,7 @@
                 </div>
 
                 {{-- Notification badge --}}
-                <div class="absolute -bottom-5 -right-5 bg-[#c8f135] rounded-xl px-4 py-2.5 shadow-xl"
-                    style="transform: rotate(2deg);">
+                <div class="absolute -bottom-5 -right-5 bg-brand rounded-xl px-4 py-2.5 shadow-xl animate-bounce-in">
                     <p class="text-xs font-black text-black leading-none">
                         <svg class="w-3.5 h-3.5 inline-block -mt-0.5 mr-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 7.21a1 1 0 0 0-1.42 0l-7.45 7.46-3.13-3.14a1 1 0 1 0-1.42 1.42l3.84 3.84a1 1 0 0 0 1.42 0l8.16-8.16a1 1 0 0 0 0-1.42Z"/></svg>{{ $openJobs }} open {{ $openJobs === 1 ? 'vacature' : 'vacatures' }}
                     </p>
@@ -112,13 +117,15 @@
     <div class="border-t border-white/[0.07]">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-3 divide-x divide-white/[0.07]">
             @foreach([
-                [$openJobs,  'Open vacatures',    '#c8f135'],
+                [$openJobs,  'Open vacatures',    'brand'],
                 [$companies, 'Bedrijven actief',  'white'],
                 [$students,  'Junior developers', 'white'],
             ] as [$n, $label, $color])
-            <div class="px-8 py-8 first:pl-0">
-                <div class="font-black text-5xl md:text-6xl tracking-tight leading-none mb-1"
-                    style="color: {{ $color }}">{{ $n }}</div>
+            <div class="px-8 py-10 first:pl-0 hover:bg-white/[0.03] transition-colors cursor-default">
+                <div class="font-black text-5xl md:text-6xl tracking-tight leading-none mb-1 {{ $color === 'brand' ? 'text-brand' : 'text-white' }}"
+                    @if($color === 'brand') style="text-shadow: 0 0 40px rgba(200,241,53,0.2)" @endif>
+                    {{ $n }}
+                </div>
                 <div class="text-gray-600 text-sm">{{ $label }}</div>
             </div>
             @endforeach
