@@ -38,8 +38,12 @@
 
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.users') }}"
-                        class="hover:text-white transition {{ request()->routeIs('admin.*') ? 'text-white' : '' }}">
-                        Beheer
+                        class="hover:text-white transition {{ request()->routeIs('admin.users*') ? 'text-white' : '' }}">
+                        Gebruikers
+                    </a>
+                    <a href="{{ route('admin.leads.index') }}"
+                        class="hover:text-white transition {{ request()->routeIs('admin.leads.*') ? 'text-white' : '' }}">
+                        Leads
                     </a>
                 @endif
 
@@ -113,6 +117,10 @@
             @endif
             @if(auth()->user()->isCompany())
                 <a href="{{ route('company.jobs.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Mijn Vacatures</a>
+            @endif
+            @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.users') }}" class="block text-sm text-gray-300 hover:text-white py-1">Gebruikers</a>
+                <a href="{{ route('admin.leads.index') }}" class="block text-sm text-gray-300 hover:text-white py-1">Leads</a>
             @endif
             <div class="pt-2 border-t border-white/10">
                 <form method="POST" action="{{ route('logout') }}">

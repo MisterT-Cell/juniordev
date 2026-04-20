@@ -46,6 +46,7 @@ class DashboardController extends Controller
                 'companies'    => \App\Models\User::where('role', 'company')->count(),
                 'jobs'         => Job::count(),
                 'applications' => Application::count(),
+                'leads'        => \App\Models\Lead::count(),
             ];
             return view('dashboard.admin', compact('stats'));
         }
