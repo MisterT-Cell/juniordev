@@ -18,13 +18,7 @@
 
     <div class="max-w-7xl mx-auto px-6 pt-24 pb-20 grid md:grid-cols-2 gap-12 items-center">
 
-        {{-- Left: copy --}}
-        <div class="relative z-10">
-            <div class="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-full px-4 py-1.5 text-xs text-gray-500 tracking-[0.12em] uppercase mb-10 hover:bg-white/10 transition">
-                <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse"></span>
-                Platform voor junior developers
-            </div>
-
+        <div>
             <h1 class="display text-white mb-8 text-balance">
                 Vind je<br>
                 <span class="outline-word">eerste</span><br>

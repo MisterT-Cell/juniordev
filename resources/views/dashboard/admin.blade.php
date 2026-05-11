@@ -74,6 +74,16 @@
                 <span class="inline-block mt-4 text-sm font-bold text-[#0a0a0a] group-hover:translate-x-1 transition-transform">Beheren &rarr;</span>
             </a>
 
+            <a href="{{ route('admin.messages.index') }}"
+                class="card-hover bg-white border border-gray-200 rounded-2xl p-6 md:p-7 group">
+                <div class="w-10 h-10 bg-[#0a0a0a] rounded-xl flex items-center justify-center mb-4">
+                    <svg class="w-5 h-5 text-[#c8f135]" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H5a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-1.56 5.31-5 4a1 1 0 0 1-1.25 0l-5-4a1 1 0 1 1 1.25-1.56L12 12.44l4.56-3.69a1 1 0 0 1 1.25 1.56Z"/></svg>
+                </div>
+                <h3 class="font-black text-base mb-1 group-hover:text-[#0a0a0a] transition">Berichtenbeheer</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Bekijk en beheer alle berichten op het platform.</p>
+                <span class="inline-block mt-4 text-sm font-bold text-[#0a0a0a] group-hover:translate-x-1 transition-transform">Beheren &rarr;</span>
+            </a>
+
         </div>
 
     </div>

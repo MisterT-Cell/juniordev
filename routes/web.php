@@ -67,6 +67,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/jobs/{job}', [AdminController::class, 'destroyJob'])->name('jobs.destroy');
 
         // Leads beheer
+        Route::get('/messages', [AdminController::class, 'messages'])->name('messages.index');
+        Route::delete('/messages/{message}', [AdminController::class, 'destroyMessage'])->name('messages.destroy');
+
         Route::get('/leads', [LeadController::class, 'adminIndex'])->name('leads.index');
         Route::get('/leads/create', [LeadController::class, 'create'])->name('leads.create');
         Route::post('/leads', [LeadController::class, 'store'])->name('leads.store');

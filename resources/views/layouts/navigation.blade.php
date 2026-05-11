@@ -17,11 +17,6 @@
                 Bedrijven zonder site
             </a>
             @auth
-                <a href="{{ route('dashboard') }}"
-                    class="nav-link-hover hover:text-white transition {{ request()->routeIs('dashboard') ? 'text-white nav-link-active' : '' }}">
-                    Dashboard
-                </a>
-
                 @if(auth()->user()->isStudent())
                     <a href="{{ route('student.applications.index') }}"
                         class="nav-link-hover hover:text-white transition {{ request()->routeIs('student.applications.*') ? 'text-white nav-link-active' : '' }}">
@@ -37,28 +32,25 @@
                 @endif
 
                 @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.users') }}"
-                        class="nav-link-hover hover:text-white transition {{ request()->routeIs('admin.users*') ? 'text-white nav-link-active' : '' }}">
-                        Gebruikers
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link-hover hover:text-white transition {{ request()->routeIs('dashboard') ? 'text-white nav-link-active' : '' }}">
+                        Dashboard
                     </a>
-                    <a href="{{ route('admin.leads.index') }}"
-                        class="nav-link-hover hover:text-white transition {{ request()->routeIs('admin.leads.*') ? 'text-white nav-link-active' : '' }}">
-                        Leads
+                @else
+                    <a href="{{ route('messages.index') }}"
+                        class="nav-link-hover hover:text-white transition flex items-center gap-1.5 {{ request()->routeIs('messages.*') ? 'text-white nav-link-active' : '' }}">
+                        Berichten
+                        @php $unread = \App\Models\Message::where('receiver_id', auth()->id())->whereNull('read_at')->count(); @endphp
+                        @if($unread > 0)
+                            <span class="bg-brand text-black text-xs font-bold rounded-full px-1.5 py-0.5 leading-none animate-pulse">{{ $unread }}</span>
+                        @endif
                     </a>
                 @endif
-
-                <a href="{{ route('messages.index') }}"
-                    class="nav-link-hover hover:text-white transition flex items-center gap-1.5 {{ request()->routeIs('messages.*') ? 'text-white nav-link-active' : '' }}">
-                    Berichten
-                    @php $unread = \App\Models\Message::where('receiver_id', auth()->id())->whereNull('read_at')->count(); @endphp
-                    @if($unread > 0)
-                        <span class="bg-brand text-black text-xs font-bold rounded-full px-1.5 py-0.5 leading-none animate-pulse">{{ $unread }}</span>
-                    @endif
-                </a>
             @endauth
         </div>
 
         {{-- Right side --}}
+
         <div class="hidden md:flex items-center gap-3">
             @auth
                 <div x-data="{ open: false }" class="relative">
@@ -123,17 +115,18 @@
         <a href="{{ route('jobs.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('jobs.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Vacatures</a>
         <a href="{{ route('leads.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('leads.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Bedrijven zonder site</a>
         @auth
-            <a href="{{ route('dashboard') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('dashboard') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Dashboard</a>
-            <a href="{{ route('messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('messages.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Berichten</a>
             @if(auth()->user()->isStudent())
+                <a href="{{ route('messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('messages.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Berichten</a>
                 <a href="{{ route('student.applications.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('student.applications.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Mijn Reacties</a>
             @endif
             @if(auth()->user()->isCompany())
+                <a href="{{ route('messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('messages.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Berichten</a>
                 <a href="{{ route('company.jobs.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('company.jobs.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Mijn Vacatures</a>
             @endif
             @if(auth()->user()->isAdmin())
                 <a href="{{ route('admin.users') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('admin.users*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Gebruikers</a>
                 <a href="{{ route('admin.leads.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('admin.leads.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Leads</a>
+                <a href="{{ route('admin.messages.index') }}" class="block text-sm text-gray-300 hover:text-white py-2.5 pl-3 border-l-2 {{ request()->routeIs('admin.messages.*') ? 'border-brand text-white' : 'border-transparent' }} transition-all">Berichten</a>
             @endif
             <div class="pt-2 mt-2 border-t border-white/10">
                 <form method="POST" action="{{ route('logout') }}">

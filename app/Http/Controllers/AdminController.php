@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Job;
 use App\Models\Application;
+use App\Models\Message;
 
 class AdminController extends Controller
 {
@@ -40,5 +41,21 @@ class AdminController extends Controller
     {
         $job->delete();
         return back()->with('success', 'Vacature verwijderd!');
+    }
+
+    public function messages(Request $request)
+    {
+        $query = Message::with('sender', 'receiver')->latest();
+        if ($request->search) {
+            $query->where('subject', 'like', '%'.$request->search.'%');
+        }
+        $messages = $query->paginate(20);
+        return view('admin.messages', compact('messages'));
+    }
+
+    public function destroyMessage(Message $message)
+    {
+        $message->delete();
+        return back()->with('success', 'Bericht verwijderd!');
     }
 }
