@@ -65,7 +65,7 @@
                         <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Regio</label>
                         <select name="region" class="w-full border-gray-200 rounded-xl text-sm focus:border-gray-900 focus:ring-0 bg-white">
                             <option value="">-- Kies regio --</option>
-                            @foreach(['Amsterdam','Rotterdam','Utrecht','Den Haag','Eindhoven','Groningen','Tilburg','Remote'] as $r)
+                            @foreach(['Noord-Holland','Zuid-Holland','Utrecht','Drenthe','Friesland','Groningen','Brabant','Gelderland','Remote'] as $r)
                                 <option value="{{ $r }}"
                                     {{ old('region', auth()->user()->studentProfile?->region) === $r ? 'selected' : '' }}>
                                     {{ $r }}

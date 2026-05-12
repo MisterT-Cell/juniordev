@@ -19,7 +19,7 @@ class ApplicationStatusChanged extends Notification
         return (new MailMessage)
             ->subject('Update over je sollicitatie')
             ->greeting('Hallo ' . $notifiable->name . '!')
-            ->line('Je reactie op "' . $this->application->assignment->title . '" is ' . $status . '.')
+            ->line('Je reactie op "' . $this->application->job->title . '" is ' . $status . '.')
             ->action('Bekijk je reacties', url('/student/applications'))
             ->line('Bedankt voor het gebruik van JuniorDev!');
     }

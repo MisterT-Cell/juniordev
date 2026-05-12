@@ -2,9 +2,11 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-black text-2xl tracking-tight">Berichten</h2>
-            <a href="{{ route('messages.create') }}" class="bg-[#0a0a0a] text-white text-sm font-bold px-4 py-2 rounded-full hover:bg-gray-800 transition">
-                + Nieuw bericht
-            </a>
+            @if(auth()->user()->isCompany())
+                <a href="{{ route('messages.create') }}" class="bg-[#0a0a0a] text-white text-sm font-bold px-4 py-2 rounded-full hover:bg-gray-800 transition">
+                    + Nieuw bericht
+                </a>
+            @endif
         </div>
     </x-slot>
 
